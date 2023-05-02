@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "RuneScape";
+  src: url("./assets/fonts/RuneScape-UF.eot");
+  src: url("./assets/fonts/RuneScape-UF.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/RuneScape-UF.woff2") format("woff2"),
+    url("./assets/fonts/RuneScape-UF.woff") format("woff"),
+    url("./assets/fonts/RuneScape-UF.ttf") format("truetype"),
+    url("./assets/fonts/RuneScape-UF.svg#RuneScape-UF") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  --black: #000000;
+  --ash-black: #222;
+  --white: #fafafa;
+  --sky: #00ccff;
+  --green: #28dd22;
+  --blue: #1300ff;
+  --dusk: #6600ff;
+  --purple: #9900ff;
+  --pink: #ff0066;
+  --red: #fe0222;
+  --orange: #fd7702;
+  --yellow: #ffbb00;
+  --background-login: linear-gradient(to bottom, var(--dusk), var(--orange));
+  --accent: var(--white);
+}

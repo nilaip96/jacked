@@ -1,0 +1,41 @@
+.card {
+  display: inline-block;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  width: 30px;
+  height: 45px;
+  text-align: center;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.deck {
+  display: inline-block;
+  background-color: blue;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  width: 50px;
+  height: 75px;
+  text-align: center;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cardValue {
+  font-size: 18px;
+}
+
+.cardSuit {
+  font-size: 24px;
+}
+
+.heart,
+.diamond {
+  color: red;
+}
+
+.club,
+.spade {
+  color: black;
+}
