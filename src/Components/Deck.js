@@ -5,10 +5,10 @@ const Deck = ({ deck }) => {
 
   return (
     <div className="deck">
-      <div className="suit heart">&hearts;</div>
-      <div className="suit diamond">&diams;</div>
-      <div className="suit club">&clubs;</div>
-      <div className="suit spade">&spades;</div>
+      <div className="cardSuit heart">&hearts;</div>
+      <div className="cardSuit diamond">&diams;</div>
+      <div className="cardSuit club">&clubs;</div>
+      <div className="cardSuit spade">&spades;</div>
     </div>
   );
 };

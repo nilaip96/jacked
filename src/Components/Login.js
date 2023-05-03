@@ -4,6 +4,13 @@ import PlayerName from "./PlayerName.js";
 
 import "./Login.css";
 import LoginTitle from "./LoginTitle";
+import { useAnimation, motion } from "framer-motion";
+import {
+  getRandomPosition,
+  getRandomTwinkleTime,
+  getRandomSize,
+  getRandomColor,
+} from "../utils.js";
 
 const Star = ({ left, top, twinkleTime, size, color }) => (
   <div
@@ -22,32 +29,7 @@ const Star = ({ left, top, twinkleTime, size, color }) => (
 const Login = () => {
   const [name, setName] = useState("");
   const [stars, setStars] = useState([]);
-
-  const getRandomPosition = () => {
-    const x = Math.floor(Math.random() * 100);
-    const y = Math.floor(Math.random() * 100);
-    return { left: `${x}%`, top: `${y}%` };
-  };
-
-  const getRandomTwinkleTime = () => 1 + Math.random() * 7;
-
-  const getRandomSize = () => 1 + Math.floor(Math.random() * 5);
-
-  const getRandomColor = () => {
-    const minColorValue = 128;
-    const maxColorValue = 255;
-
-    const r = Math.floor(
-      Math.random() * (maxColorValue - minColorValue) + minColorValue
-    );
-    const g = Math.floor(
-      Math.random() * (maxColorValue - minColorValue) + minColorValue
-    );
-    const b = Math.floor(
-      Math.random() * (maxColorValue - minColorValue) + minColorValue
-    );
-    return `rgb(${r},${g},${b})`;
-  };
+  const controls = useAnimation();
 
   useEffect(() => {
     const newStars = [];
@@ -66,11 +48,30 @@ const Login = () => {
     }
     setStars(newStars);
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      controls.start({
+        opacity: 1,
+        transition: {
+          duration: 4,
+          ease: "easeInOut",
+        },
+      });
+    }, 2000);
+  }, [controls]);
+
   return (
     <div className="Login">
-      <LoginTitle text={"JACKED"} />
-      <PlayerName name={name} setName={setName} />
-      <JoinRoom name={name} />
+      <motion.div
+        className="login-content"
+        initial={{ opacity: 0 }}
+        animate={controls}
+      >
+        <LoginTitle text={"JACKED"} />
+        <PlayerName name={name} setName={setName} />
+        <JoinRoom name={name} />
+      </motion.div>
       {stars}
     </div>
   );

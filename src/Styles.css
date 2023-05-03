@@ -16,7 +16,7 @@ body {
   --ash-black: #222;
   --white: #fafafa;
   --sky: #00ccff;
-  --green: #28dd22;
+  --green: #5dd359;
   --blue: #1300ff;
   --dusk: #6600ff;
   --purple: #9900ff;
@@ -25,5 +25,6 @@ body {
   --orange: #fd7702;
   --yellow: #ffbb00;
   --background-login: linear-gradient(to bottom, var(--dusk), var(--orange));
+  --grassy-room: var(--green);
   --accent: var(--white);
 }

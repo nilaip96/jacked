@@ -1,0 +1,40 @@
+.grassy-room {
+  font-family: RuneScape;
+  background-color: var(--grassy-room);
+  z-index: -2;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grassy-room-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 32px 32px;
+}
+
+.Grass {
+  position: absolute;
+  width: 2px;
+  height: var(--height);
+  background-color: var(--color);
+  z-index: -1;
+  animation: wind 2s ease-in-out infinite;
+}
+
+@keyframes wind {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

@@ -13,7 +13,7 @@ const LoginTitle = ({ text }) => {
           ease: "easeInOut",
         },
       });
-    }, 2000); // 2 seconds delay.
+    }, 4000); // 2 seconds delay.
   }, [controls]);
 
   return (

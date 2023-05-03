@@ -4,13 +4,13 @@ import "./Card.css";
 const Suite = ({ suit }) => {
   switch (suit) {
     case "hearts":
-      return <div className="suit heart">&hearts;</div>;
+      return <div className="cardSuit heart">&hearts;</div>;
     case "diamonds":
-      return <div className="suit diamond">&diams;</div>;
+      return <div className="cardSuit diamond">&diams;</div>;
     case "clubs":
-      return <div className="suit club">&clubs;</div>;
+      return <div className="cardSuit club">&clubs;</div>;
     case "spades":
-      return <div className="suit spade">&spades;</div>;
+      return <div className="cardSuit spade">&spades;</div>;
     default:
       return;
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Login from "./Components/Login.js";
-import Room from "./Components/Room.js";
+import GrassyRoom from "./Components/GrassyRoom.js";
 import { useSocket } from "./SocketContext";
 
 const Rooms = () => {
@@ -19,7 +19,7 @@ const Rooms = () => {
     };
   });
 
-  return <div>{room === "" ? <Login /> : <Room />}</div>;
+  return <>{room === "" ? <Login /> : <GrassyRoom />}</>;
 };
 
 export default Rooms;
