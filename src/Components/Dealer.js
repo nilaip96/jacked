@@ -29,7 +29,7 @@ const Dealer = () => {
 
   const { hand, deck, tossed, hidden, wallet } = dealer;
   return (
-    <div style={{ display: 'flex', flexDirection: 'row'}}>
+    <div style={{ display: "flex", flexDirection: "row" }}>
       <div>Dealer</div>
       <div>{wallet}</div>
       <div>

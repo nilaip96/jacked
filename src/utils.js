@@ -56,19 +56,20 @@ export const getRandomLightColor = () => {
   return `rgb(${r},${g},${b})`;
 };
 
-
 export const getRandomSaturatedLightColor = () => {
   const randomHueExceptGreen = () => {
     let hue;
     do {
       // Generate a hue between 0 and 360, excluding the green range (100-150)
-      hue = Math.floor(Math.random() * 261) + ((Math.floor(Math.random() * 2) === 0) ? 0 : 150);
+      hue =
+        Math.floor(Math.random() * 261) +
+        (Math.floor(Math.random() * 2) === 0 ? 0 : 150);
     } while (hue >= 100 && hue <= 150);
 
     return hue;
-  }
+  };
 
-  const  hslToRgb = (h, s, l) => {
+  const hslToRgb = (h, s, l) => {
     let r, g, b;
 
     if (s === 0) {
@@ -91,12 +92,12 @@ export const getRandomSaturatedLightColor = () => {
     }
 
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-  }
+  };
 
   const hue = randomHueExceptGreen();
   const saturation = 0.8;
-  const lightness = 0.6; 
+  const lightness = 0.6;
   const rgb = hslToRgb(hue / 360, saturation, lightness);
 
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-}
+};

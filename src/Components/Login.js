@@ -29,7 +29,7 @@ const Star = ({ left, top, twinkleTime, size, color }) => (
 const Login = () => {
   const [name, setName] = useState("");
   const controls = useAnimation();
-  const stars = useMemo(()=>{
+  const stars = useMemo(() => {
     const newStars = [];
     for (let i = 0; i < 100; i++) {
       const randomPosition = getRandomPosition();
@@ -44,8 +44,8 @@ const Login = () => {
         />
       );
     }
-    return newStars
-  },[])
+    return newStars;
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {

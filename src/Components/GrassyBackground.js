@@ -1,22 +1,28 @@
-
-
 import React, { useMemo } from "react";
 import "./GrassyRoom.css";
-import { getRandomPosition, getRandomHorizontalShift, getRandomSaturatedLightColor, getRandomGreenColor, getRandomWindTime, getRandomHeight, getRandomSize } from "../utils.js";
+import {
+  getRandomPosition,
+  getRandomHorizontalShift,
+  getRandomSaturatedLightColor,
+  getRandomGreenColor,
+  getRandomWindTime,
+  getRandomHeight,
+  getRandomSize,
+} from "../utils.js";
 
 const Grass = ({ left, top, windTime, height, color, horizontalShift }) => (
-    <div
-      className="Grass"
-      style={{
-        left,
-        top,
-        height: `${height}px`,
-        backgroundColor: color,
-        animationDuration: `${windTime}s`,
-        transform: `translateX(${horizontalShift}px)`,
-      }}
-    />
-)
+  <div
+    className="Grass"
+    style={{
+      left,
+      top,
+      height: `${height}px`,
+      backgroundColor: color,
+      animationDuration: `${windTime}s`,
+      transform: `translateX(${horizontalShift}px)`,
+    }}
+  />
+);
 
 const Flower = ({ left, top, windTime, size, color, horizontalShift }) => (
   <div
@@ -30,9 +36,9 @@ const Flower = ({ left, top, windTime, size, color, horizontalShift }) => (
       transform: `translateX(${horizontalShift}px)`,
     }}
   >
-  ✿
+    ✿
   </div>
-)
+);
 
 const GrassyBackground = React.memo(() => {
   const plants = useMemo(() => {
@@ -50,7 +56,7 @@ const GrassyBackground = React.memo(() => {
           key={`grass_${i}`}
         />
       );
-      if( i % 5 === 0 ){
+      if (i % 5 === 0) {
         const flowerPosition = getRandomPosition();
 
         newPlants.push(
@@ -65,16 +71,11 @@ const GrassyBackground = React.memo(() => {
           />
         );
       }
-
-
     }
     return newPlants;
-  }, [])
+  }, []);
 
-
-  return (
-    <>{plants}</>
-  );
+  return <>{plants}</>;
 });
 
 export default GrassyBackground;
