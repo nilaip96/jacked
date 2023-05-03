@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import JoinRoom from "./JoinRoomLogin";
 import PlayerName from "./PlayerName.js";
 
@@ -28,10 +28,8 @@ const Star = ({ left, top, twinkleTime, size, color }) => (
 
 const Login = () => {
   const [name, setName] = useState("");
-  const [stars, setStars] = useState([]);
   const controls = useAnimation();
-
-  useEffect(() => {
+  const stars = useMemo(()=>{
     const newStars = [];
     for (let i = 0; i < 100; i++) {
       const randomPosition = getRandomPosition();
@@ -46,8 +44,8 @@ const Login = () => {
         />
       );
     }
-    setStars(newStars);
-  }, []);
+    return newStars
+  },[])
 
   useEffect(() => {
     setTimeout(() => {
