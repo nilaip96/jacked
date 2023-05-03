@@ -9,7 +9,7 @@ import {
   getRandomPosition,
   getRandomTwinkleTime,
   getRandomSize,
-  getRandomColor,
+  getRandomLightColor,
 } from "../utils.js";
 
 const Star = ({ left, top, twinkleTime, size, color }) => (
@@ -39,7 +39,7 @@ const Login = () => {
           top={randomPosition.top}
           twinkleTime={getRandomTwinkleTime()}
           size={getRandomSize()}
-          color={getRandomColor()}
+          color={getRandomLightColor()}
           key={`star_${i}`}
         />
       );

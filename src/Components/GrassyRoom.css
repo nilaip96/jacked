@@ -26,6 +26,15 @@
   animation: wind 2s ease-in-out infinite;
 }
 
+.Flower {
+  position: absolute;
+  width: 2px;
+  height: var(--height);
+  background-color: var(--color);
+  z-index: -1;
+  animation: wind 2s ease-in-out infinite;
+}
+
 @keyframes wind {
   0% {
     transform: rotate(0deg);

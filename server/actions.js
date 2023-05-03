@@ -294,9 +294,7 @@ const determineWinners = (_socket, io, roomName) => {
   const stayedPlayers = Object.values(Players).filter(
     (player) => player.status === PLAYER_STATUS.stay
   );
-  log("here");
   if (isBust(Dealer.hand)) {
-    log("busted");
     stayedPlayers.forEach((player) => {
       player.wallet += player.bet * 2;
       player.status = PLAYER_STATUS.winner;
@@ -307,7 +305,6 @@ const determineWinners = (_socket, io, roomName) => {
     });
   } else {
     stayedPlayers.forEach((player) => {
-      log(player.name, split);
       if (player.split) {
         const outComes = [];
         const bustedHands = player.hands.filter(({ length }) => !length).length;
