@@ -19,7 +19,7 @@ const Star = ({ left, top, twinkleTime, size, color }) => (
   />
 );
 
-const Login = ({ app, setApp }) => {
+const Login = () => {
   const [name, setName] = useState("");
   const [stars, setStars] = useState([]);
 
@@ -70,7 +70,7 @@ const Login = ({ app, setApp }) => {
     <div className="Login">
       <LoginTitle text={"JACKED"} />
       <PlayerName name={name} setName={setName} />
-      <JoinRoom app={app} setApp={setApp} name={name} />
+      <JoinRoom name={name} />
       {stars}
     </div>
   );

@@ -35,6 +35,8 @@ const joinRoom = (socket, _io, roomName, playerName) => {
   //Add player to room and inform current room
   addPlayerToRoom(roomName, player);
   socket.join(roomName);
+  socket.emit("room-received", roomName);
+
   socket.to(roomName).emit("message-received", newMessage);
   socket.to(roomName).emit("player-received", player);
 
@@ -282,7 +284,7 @@ const placeBet = (socket, io, amount) => {
   }
 
   if (!room.startedTimer) {
-    countDown(socket, io, 10);
+    countDown(socket, io, 5);
     room.startedTimer = true;
   }
 };

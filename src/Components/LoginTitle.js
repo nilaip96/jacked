@@ -14,7 +14,7 @@ const LoginTitle = ({ text }) => {
         },
       });
     }, 2000); // 2 seconds delay.
-  }, []);
+  }, [controls]);
 
   return (
     <motion.div

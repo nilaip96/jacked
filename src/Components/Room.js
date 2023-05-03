@@ -3,16 +3,12 @@ import JoinRoom from "./JoinRoom";
 import Chat from "./Chat";
 import Table from "./Table.js";
 
-function Room({ app, setApp }) {
-  return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <Table />
-        <Chat />
-        <JoinRoom app={app} setApp={setApp} />
-      </div>
-    </div>
-  );
-}
+const Room = () => (
+  <div style={{ display: "flex", flexDirection: "column" }}>
+    <Table />
+    <Chat />
+    <JoinRoom />
+  </div>
+);
 
 export default Room;

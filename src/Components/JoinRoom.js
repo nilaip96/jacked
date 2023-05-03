@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSocket } from "../SocketContext.js";
 import "./Input.css";
 
-function JoinRoom({ name }) {
+const JoinRoom = ({ name }) => {
   const socket = useSocket();
   const [room, setRoom] = useState("");
 
@@ -25,6 +25,6 @@ function JoinRoom({ name }) {
       </div>
     </div>
   );
-}
+};
 
 export default JoinRoom;

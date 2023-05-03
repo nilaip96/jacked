@@ -7,7 +7,7 @@ import {
   startTypingAnimation,
 } from "./LoginPageAnimations.js";
 
-function JoinRoom({ setApp, name }) {
+const JoinRoom = ({ name }) => {
   const socket = useSocket();
   const [room, setRoom] = useState("");
   const controls = useAnimation();
@@ -18,6 +18,8 @@ function JoinRoom({ setApp, name }) {
     visible: { opacity: 1 },
     hidden: { opacity: 0 },
   };
+  const mountedRef = useRef(true);
+  const [hoverFlag, setHoverFlag] = useState(false);
 
   const handleInputChange = ({ target }) => {
     setRoom(target.value);
@@ -26,34 +28,48 @@ function JoinRoom({ setApp, name }) {
 
   useEffect(() => {
     startInputAnimation(controls, inputRef);
-  }, []);
+  }, [controls]);
 
   const joinRoom = (event) => {
     event.preventDefault();
     if (room.length === 0) return;
     socket.emit("join-room", room, name);
-    setApp("room");
-    buttonControls.start = () => {};
   };
 
-  const runAway = () => {
-    const newPositionX = Math.random() * 50;
-    const newPositionY = Math.random() * 50;
-    buttonControls.start({
-      x: newPositionX,
-      y: newPositionY,
-      transition: {
-        ease: "easeOut",
-        duration: 0.3,
-      },
-    });
+  const handleMouseEnter = () => {
+    setHoverFlag(true);
   };
 
-  const handleHover = () => {
-    setTimeout(() => {
-      runAway();
-    }, 2000);
+  const handleMouseLeave = () => {
+    setHoverFlag(false);
   };
+
+  useEffect(() => {
+    const runAway = () => {
+      const newPositionX = Math.random() * 50;
+      const newPositionY = Math.random() * 50;
+      buttonControls.start({
+        x: newPositionX,
+        y: newPositionY,
+        transition: {
+          ease: "easeOut",
+          duration: 0.3,
+        },
+      });
+    };
+
+    if (hoverFlag) {
+      const timer = setTimeout(() => {
+        if (mountedRef.current) {
+          runAway();
+        }
+      }, 2000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [hoverFlag, buttonControls]);
 
   return (
     <>
@@ -80,7 +96,8 @@ function JoinRoom({ setApp, name }) {
               animate="visible"
               exit="hidden"
               variants={buttonVariants}
-              onMouseEnter={handleHover}
+              onMouseEnter={handleMouseEnter} // Update event handler here
+              onMouseLeave={handleMouseLeave} // Add onMouseLeave event handler
               transition={{ ease: "easeInOut", duration: 0.5 }}
             >
               Join Room
@@ -90,6 +107,6 @@ function JoinRoom({ setApp, name }) {
       </motion.div>
     </>
   );
-}
+};
 
 export default JoinRoom;

@@ -18,7 +18,7 @@ const PlayerName = ({ name, setName }) => {
 
   useEffect(() => {
     startInputAnimation(controls, inputRef);
-  }, []);
+  }, [controls]);
 
   return (
     <motion.div initial={{ x: 0 }} animate={controls}>

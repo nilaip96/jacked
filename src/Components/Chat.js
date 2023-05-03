@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSocket } from "../SocketContext.js";
 import "./Chat.css";
 
-function Chat() {
+const Chat = () => {
   const socket = useSocket();
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -54,6 +54,6 @@ function Chat() {
       </button>
     </div>
   );
-}
+};
 
 export default Chat;

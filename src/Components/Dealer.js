@@ -35,7 +35,7 @@ const Dealer = () => {
       <div>
         {hand.map((card, i) =>
           hidden && i === 0 ? (
-            <Deck deck={["HIDDEN_CARD"]} />
+            <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />
           ) : (
             <Card card={card} key={i} />
           )

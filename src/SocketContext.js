@@ -5,7 +5,7 @@ const SocketContext = createContext();
 
 const endPoint = "http://localhost:3001";
 
-export function SocketProvider({ children }) {
+export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -20,8 +20,6 @@ export function SocketProvider({ children }) {
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
-}
+};
 
-export function useSocket() {
-  return React.useContext(SocketContext);
-}
+export const useSocket = () => React.useContext(SocketContext);
