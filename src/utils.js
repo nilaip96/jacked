@@ -1,7 +1,14 @@
 export const getRandomPosition = () => {
   const x = 3 + Math.floor(Math.random() * 94);
   const y = 3 + Math.floor(Math.random() * 94);
-  return { left: `${x}%`, top: `${y}%` };
+  return {
+    left: `${x}%`,
+    top: `${y}%`,
+    leftFlower: `${x - 0.4}%`,
+    topFlower: `${y - 1.2}%`,
+    zIndex: y - 9000,
+    windTime: `${x / 30 + 1}s `,
+  };
 };
 
 export const getRandomHeight = () => 5 + Math.floor(Math.random() * 2);

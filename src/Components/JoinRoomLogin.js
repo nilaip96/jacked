@@ -20,7 +20,13 @@ const JoinRoom = ({ name }) => {
   };
   const mountedRef = useRef(true);
   const [hoverFlag, setHoverFlag] = useState(false);
+  const handleMouseEnter = () => {
+    setHoverFlag(true);
+  };
 
+  const handleMouseLeave = () => {
+    setHoverFlag(false);
+  };
   const handleInputChange = ({ target }) => {
     setRoom(target.value);
     startTypingAnimation(typingControls);
@@ -34,14 +40,6 @@ const JoinRoom = ({ name }) => {
     event.preventDefault();
     if (room.length === 0) return;
     socket.emit("join-room", room, name);
-  };
-
-  const handleMouseEnter = () => {
-    setHoverFlag(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverFlag(false);
   };
 
   useEffect(() => {

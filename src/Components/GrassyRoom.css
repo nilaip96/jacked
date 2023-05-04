@@ -1,7 +1,7 @@
 .grassy-room {
   font-family: RuneScape;
   background-color: var(--grassy-room);
-  z-index: -2;
+  z-index: -10000;
   position: fixed;
   overflow: hidden;
   top: 0;

@@ -5,35 +5,52 @@ import {
   getRandomHorizontalShift,
   getRandomSaturatedLightColor,
   getRandomGreenColor,
-  getRandomWindTime,
   getRandomHeight,
   getRandomSize,
 } from "../utils.js";
 
-const Grass = ({ left, top, windTime, height, color, horizontalShift }) => (
+const Grass = ({
+  left,
+  top,
+  windTime,
+  height,
+  color,
+  horizontalShift,
+  zIndex,
+}) => (
   <div
     className="Grass"
     style={{
       left,
       top,
-      height: `${height}px`,
+      height: `${height + 3}px`,
       backgroundColor: color,
-      animationDuration: `${windTime}s`,
+      animationDuration: windTime,
       transform: `translateX(${horizontalShift}px)`,
+      zIndex: zIndex,
     }}
   />
 );
 
-const Flower = ({ left, top, windTime, size, color, horizontalShift }) => (
+const Flower = ({
+  left,
+  top,
+  windTime,
+  size,
+  color,
+  horizontalShift,
+  zIndex,
+}) => (
   <div
     className="Flower"
     style={{
       left,
       top,
-      fontSize: `${size + 9}px`,
+      fontSize: `${size + 12}px`,
       color,
-      animationDuration: `${windTime}s`,
+      animationDuration: windTime,
       transform: `translateX(${horizontalShift}px)`,
+      zIndex: zIndex,
     }}
   >
     ✿
@@ -49,25 +66,25 @@ const GrassyBackground = React.memo(() => {
         <Grass
           left={randomPosition.left}
           top={randomPosition.top}
-          windTime={getRandomWindTime()}
+          windTime={randomPosition.windTime}
           height={getRandomHeight()}
           color={getRandomGreenColor()}
           horizontalShift={getRandomHorizontalShift()}
           key={`grass_${i}`}
+          zIndex={randomPosition.zIndex}
         />
       );
-      if (i % 5 === 0) {
-        const flowerPosition = getRandomPosition();
-
+      if (i % 2 === 0) {
         newPlants.push(
           <Flower
-            left={flowerPosition.left}
-            top={flowerPosition.top}
-            windTime={getRandomWindTime()}
+            left={randomPosition.leftFlower}
+            top={randomPosition.topFlower}
+            windTime={randomPosition.windTime}
             size={getRandomSize()}
             color={getRandomSaturatedLightColor()}
             horizontalShift={getRandomHorizontalShift()}
             key={`flower_${i}`}
+            zIndex={randomPosition.zIndex}
           />
         );
       }
