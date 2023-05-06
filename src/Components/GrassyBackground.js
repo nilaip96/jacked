@@ -5,6 +5,7 @@ import {
   getRandomHorizontalShift,
   getRandomSaturatedLightColor,
   getRandomGreenColor,
+  getRandomBrownColor,
   getRandomHeight,
   getRandomSize,
 } from "../utils.js";
@@ -40,29 +41,57 @@ const Flower = ({
   color,
   horizontalShift,
   zIndex,
+}) =>  {
+  const style = {
+    left,
+    top,
+    fontSize: `${size + 10}px`,
+    color,
+    animationDuration: windTime,
+    transform: `translateX(${horizontalShift}px)`,
+    zIndex: zIndex,
+  }
+  
+
+  const flower = useMemo(()=>{
+    const flowers = [
+      <div className="Flower" style={style}>&hearts;</div>,
+      <div className="Flower" style={style}>&diams;</div>,
+      <div className="Flower" style={style}>&clubs;</div>,
+      <div className="Flower" style={style}>&spades;</div>,
+    ]
+
+    const randomNumber = Math.floor(Math.random() * flowers.length)
+    return flowers[randomNumber]
+  }, [])
+  
+  return (flower);
+}
+
+const Dirt = ({
+  left,
+  top,
+  size,
+  backgroundColor,
 }) => (
   <div
-    className="Flower"
+    className="Dirt"
     style={{
       left,
       top,
-      fontSize: `${size + 12}px`,
-      color,
-      animationDuration: windTime,
-      transform: `translateX(${horizontalShift}px)`,
-      zIndex: zIndex,
+      height: `${size * 6}px`,
+      width: `${size * 6}px`,
+      backgroundColor,
     }}
-  >
-    ✿
-  </div>
+  />
 );
 
 const GrassyBackground = React.memo(() => {
-  const plants = useMemo(() => {
-    const newPlants = [];
-    for (let i = 0; i < 1000; i++) {
+  const ground = useMemo(() => {
+    const newGround = [];
+    for (let i = 0; i < 500; i++) {
       const randomPosition = getRandomPosition();
-      newPlants.push(
+      newGround.push(
         <Grass
           left={randomPosition.left}
           top={randomPosition.top}
@@ -70,12 +99,12 @@ const GrassyBackground = React.memo(() => {
           height={getRandomHeight()}
           color={getRandomGreenColor()}
           horizontalShift={getRandomHorizontalShift()}
-          key={`grass_${i}`}
           zIndex={randomPosition.zIndex}
+          key={`grass_${i}`}
         />
       );
       if (i % 2 === 0) {
-        newPlants.push(
+        newGround.push(
           <Flower
             left={randomPosition.leftFlower}
             top={randomPosition.topFlower}
@@ -83,16 +112,40 @@ const GrassyBackground = React.memo(() => {
             size={getRandomSize()}
             color={getRandomSaturatedLightColor()}
             horizontalShift={getRandomHorizontalShift()}
-            key={`flower_${i}`}
             zIndex={randomPosition.zIndex}
+            key={`flower_${i}`}
           />
         );
       }
+      if( i % 50 === 0){
+        const randomDirtPosition = getRandomPosition();
+        newGround.push(
+          <Dirt
+            left={randomDirtPosition.left}
+            top={randomDirtPosition.top}
+            size={getRandomSize()}
+            backgroundColor={getRandomBrownColor()}
+            key={`dirt_${i}`}
+          />
+        )
+        const randomDirtTwoPosition = getRandomPosition();
+
+        newGround.push(
+          <Dirt
+            left={randomDirtTwoPosition.left}
+            top={randomDirtTwoPosition.top}
+            size={getRandomSize()}
+            backgroundColor={getRandomGreenColor()}
+            key={`dirt2_${i}`}
+          />
+        )
+      }
+
     }
-    return newPlants;
+    return newGround;
   }, []);
 
-  return <>{plants}</>;
+  return <>{ground}</>;
 });
 
 export default GrassyBackground;

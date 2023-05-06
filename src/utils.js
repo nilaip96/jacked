@@ -4,9 +4,9 @@ export const getRandomPosition = () => {
   return {
     left: `${x}%`,
     top: `${y}%`,
-    leftFlower: `${x - 0.4}%`,
-    topFlower: `${y - 1.2}%`,
-    zIndex: y - 9000,
+    leftFlower: `${x - 0.33}%`,
+    topFlower: `${y - 1.4}%`,
+    zIndex: y - 1000,
     windTime: `${x / 30 + 1}s `,
   };
 };
@@ -22,7 +22,29 @@ export const getRandomGreenColor = () => {
   const g = Math.floor(
     Math.random() * (maxColorValue - minColorValue) + minColorValue
   );
+
   return `rgb(0,${g},0)`;
+};
+
+export const getRandomBrownColor = () => {
+  const minRedColorValue = 210;
+  const maxRedColorValue = 255;
+  const minGreenColorValue = 190;
+  const maxGreenColorValue = 245;
+  const minBlueColorValue = 50;
+  const maxBlueColorValue = 200;
+
+  const r = Math.floor(
+    Math.random() * (maxRedColorValue - minRedColorValue) + minRedColorValue
+  );
+  const g = Math.floor(
+    Math.random() * (maxGreenColorValue - minGreenColorValue) + minGreenColorValue
+  );
+  const b = Math.floor(
+    Math.random() * (maxBlueColorValue - minBlueColorValue) + minBlueColorValue
+  );
+
+  return `rgb(${r},${g},${b})`;
 };
 
 export const getRandomHorizontalShift = () => Math.floor(Math.random() * 2);
