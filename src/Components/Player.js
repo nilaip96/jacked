@@ -14,7 +14,7 @@ const Player = ({ player }) => {
       {hands.map((hand, handIndex) => (
         <div key={`hand-${handIndex}`}>
           {hand.map((card, i) => (
-            <Card card={card} key={`card-${handIndex + i }`}/>
+            <Card card={card} key={`card-${handIndex + i}`} />
           ))}
         </div>
       ))}

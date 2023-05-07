@@ -13,4 +13,3 @@ export const WEIGHT = {
   king: [10],
   ace: [11, 1],
 };
-

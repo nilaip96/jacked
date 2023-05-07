@@ -41,7 +41,7 @@ const Flower = ({
   color,
   horizontalShift,
   zIndex,
-}) =>  {
+}) => {
   const style = {
     left,
     top,
@@ -50,30 +50,32 @@ const Flower = ({
     animationDuration: windTime,
     transform: `translateX(${horizontalShift}px)`,
     zIndex: zIndex,
-  }
-  
+  };
 
-  const flower = useMemo(()=>{
+  const flower = useMemo(() => {
     const flowers = [
-      <div className="Flower" style={style}>&hearts;</div>,
-      <div className="Flower" style={style}>&diams;</div>,
-      <div className="Flower" style={style}>&clubs;</div>,
-      <div className="Flower" style={style}>&spades;</div>,
-    ]
+      <div className="Flower" style={style}>
+        &hearts;
+      </div>,
+      <div className="Flower" style={style}>
+        &diams;
+      </div>,
+      <div className="Flower" style={style}>
+        &clubs;
+      </div>,
+      <div className="Flower" style={style}>
+        &spades;
+      </div>,
+    ];
 
-    const randomNumber = Math.floor(Math.random() * flowers.length)
-    return flowers[randomNumber]
-  }, [])
-  
-  return (flower);
-}
+    const randomNumber = Math.floor(Math.random() * flowers.length);
+    return flowers[randomNumber];
+  }, []);
 
-const Dirt = ({
-  left,
-  top,
-  size,
-  backgroundColor,
-}) => (
+  return flower;
+};
+
+const Dirt = ({ left, top, size, backgroundColor }) => (
   <div
     className="Dirt"
     style={{
@@ -117,7 +119,7 @@ const GrassyBackground = React.memo(() => {
           />
         );
       }
-      if( i % 50 === 0){
+      if (i % 50 === 0) {
         const randomDirtPosition = getRandomPosition();
         newGround.push(
           <Dirt
@@ -127,7 +129,7 @@ const GrassyBackground = React.memo(() => {
             backgroundColor={getRandomBrownColor()}
             key={`dirt_${i}`}
           />
-        )
+        );
         const randomDirtTwoPosition = getRandomPosition();
 
         newGround.push(
@@ -138,9 +140,8 @@ const GrassyBackground = React.memo(() => {
             backgroundColor={getRandomGreenColor()}
             key={`dirt2_${i}`}
           />
-        )
+        );
       }
-
     }
     return newGround;
   }, []);

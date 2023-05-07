@@ -6,7 +6,7 @@ import Plays from "./Plays.js";
 import { bestScore } from "../utils";
 
 const You = ({ player, inGame }) => {
-  const { name, status, wallet = 0, hands = [], bets = []} = player;
+  const { name, status, wallet = 0, hands = [], bets = [] } = player;
 
   return (
     <div className="grid-item">
@@ -18,7 +18,7 @@ const You = ({ player, inGame }) => {
       {hands.map((hand, handIndex) => (
         <div key={`hand-${handIndex}`}>
           {hand.map((card, i) => (
-            <Card card={card} key={`card-${handIndex + i }`}/>
+            <Card card={card} key={`card-${handIndex + i}`} />
           ))}
           <div>{bestScore(hand)}</div>
         </div>

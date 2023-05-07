@@ -3,7 +3,7 @@ import { useSocket } from "../SocketContext.js";
 
 import Card from "./Card.js";
 import Deck from "./Deck.js";
-import { bestScore} from "../utils.js"
+import { bestScore } from "../utils.js";
 
 const Dealer = () => {
   const socket = useSocket();

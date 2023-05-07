@@ -102,7 +102,6 @@ const determineWinner = (outcomes) => {
     : OUTCOMES.Dealer;
 };
 
-
 module.exports = {
   compareHands,
   isBust,
@@ -113,5 +112,5 @@ module.exports = {
   bestScore,
   determineWinner,
   analyzeOutComes,
-  delay
+  delay,
 };

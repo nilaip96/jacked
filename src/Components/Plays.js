@@ -1,6 +1,7 @@
 import React from "react";
 import { useSocket } from "../SocketContext.js";
 import { isBust } from "../utils.js";
+import { WEIGHT } from "../Constants.js";
 
 const Plays = ({ player }) => {
   const { hands } = player;
@@ -31,16 +32,18 @@ const Plays = ({ player }) => {
       <button onClick={handleStay}>STAY</button>
       {hands.map((hand, handIndex) => (
         <div key={`actions-${handIndex}`}>
-          {!isBust(hand) && <button
-            key={`hit-${handIndex}`}
-            onClick={(e) => handleHit(e, handIndex)}
-          >
-            {`HIT ${handIndex + 1}`}
-          </button>}
-          {/* {hand.length === 2 &&
+          {!isBust(hand) && (
+            <button
+              key={`hit-${handIndex}`}
+              onClick={(e) => handleHit(e, handIndex)}
+            >
+              {`HIT ${handIndex + 1}`}
+            </button>
+          )}
+          {hand.length === 2 &&
             WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0] && (
-              )} */}
               <button onClick={(e) => handleSplit(e, handIndex)}>SPLIT</button>
+            )}
         </div>
       ))}
       {hands.length === 1 && hands[0].length === 2 && (

@@ -33,7 +33,7 @@
   animation: wind 2s ease-in-out infinite;
 }
 
-.Dirt{
+.Dirt {
   position: absolute;
   z-index: -9999;
 }
