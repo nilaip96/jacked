@@ -1,6 +1,6 @@
 import React from "react";
 import { useSocket } from "../SocketContext.js";
-import { isBust } from "../utils.js";
+import { isBust, bestScore } from "../utils.js";
 import { WEIGHT } from "../Constants.js";
 
 const Plays = ({ player }) => {
@@ -32,7 +32,7 @@ const Plays = ({ player }) => {
       <button onClick={handleStay}>STAY</button>
       {hands.map((hand, handIndex) => (
         <div key={`actions-${handIndex}`}>
-          {!isBust(hand) && (
+          {!isBust(hand) && bestScore(hand) !== 21 && (
             <button
               key={`hit-${handIndex}`}
               onClick={(e) => handleHit(e, handIndex)}
