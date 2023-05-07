@@ -1,34 +1,24 @@
 import React from "react";
 import { useSocket } from "../SocketContext.js";
-import { WEIGHT } from "../Constants.js";
+import { isBust } from "../utils.js";
 
 const Plays = ({ player }) => {
-  const { split, hand, hands } = player;
+  const { hands } = player;
 
   const socket = useSocket();
 
-  const handleHit = (e) => {
+  const handleHit = (e, handIndex) => {
     e.preventDefault();
-    socket.emit("hit");
+    socket.emit("hit", handIndex);
   };
   const handleStay = (e) => {
     e.preventDefault();
     socket.emit("stay");
   };
 
-  const handleSplit = (e) => {
+  const handleSplit = (e, handIndex) => {
     e.preventDefault();
-    socket.emit("split");
-  };
-
-  const handleSplit0 = (e) => {
-    e.preventDefault();
-    socket.emit("split-hit", 0);
-  };
-
-  const handleSplit1 = (e) => {
-    e.preventDefault();
-    socket.emit("split-hit", 1);
+    socket.emit("split", handIndex);
   };
 
   const handleDoubleDown = (e) => {
@@ -36,23 +26,26 @@ const Plays = ({ player }) => {
     socket.emit("double-down");
   };
 
-  const hasTwoCards = hand.length === 2;
-  const notSplit = !split;
-  const hasSplit =
-    notSplit &&
-    hasTwoCards &&
-    WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0];
-  const hasHandOne = split && hands[0].length;
-  const hasHandTwo = split && hands[1].length;
-
   return (
     <div>
       <button onClick={handleStay}>STAY</button>
-      {notSplit && <button onClick={handleHit}>HIT</button>}
-      {hasSplit && <button onClick={handleSplit}>SPLIT</button>}
-      {hasHandOne && <button onClick={handleSplit0}>Hit 1</button>}
-      {hasHandTwo && <button onClick={handleSplit1}>Hit 2</button>}
-      {hasTwoCards && <button onClick={handleDoubleDown}>DD</button>}
+      {hands.map((hand, handIndex) => (
+        <div key={`actions-${handIndex}`}>
+          {!isBust(hand) && <button
+            key={`hit-${handIndex}`}
+            onClick={(e) => handleHit(e, handIndex)}
+          >
+            {`HIT ${handIndex + 1}`}
+          </button>}
+          {/* {hand.length === 2 &&
+            WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0] && (
+              )} */}
+              <button onClick={(e) => handleSplit(e, handIndex)}>SPLIT</button>
+        </div>
+      ))}
+      {hands.length === 1 && hands[0].length === 2 && (
+        <button onClick={handleDoubleDown}>DD</button>
+      )}
     </div>
   );
 };

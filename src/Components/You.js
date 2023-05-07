@@ -3,9 +3,10 @@ import "./Player.css";
 import Card from "./Card.js";
 import BetPlacer from "./BetPlacer.js";
 import Plays from "./Plays.js";
+import { bestScore } from "../utils";
 
 const You = ({ player, inGame }) => {
-  const { name, status, wallet, hand, bet, split, hands } = player;
+  const { name, status, wallet = 0, hands = [], bets = []} = player;
 
   return (
     <div className="grid-item">
@@ -13,19 +14,15 @@ const You = ({ player, inGame }) => {
       <div>{name}</div>
       <div>{wallet}</div>
       <div>{status}</div>
-      <div>{bet}</div>
-      <div>
-        {hand.map((card, i) => (
-          <Card card={card} key={i} />
-        ))}
-      </div>
-      <div>
-        {split && hands[0].map((card, i) => <Card card={card} key={`${i}0`} />)}
-      </div>
-      <div>
-        {split && hands[1].map((card, i) => <Card card={card} key={`${i}1`} />)}
-      </div>
-
+      <div>{bets.reduce((sum, bet) => sum + bet, 0)}</div>
+      {hands.map((hand, handIndex) => (
+        <div key={`hand-${handIndex}`}>
+          {hand.map((card, i) => (
+            <Card card={card} key={`card-${handIndex + i }`}/>
+          ))}
+          <div>{bestScore(hand)}</div>
+        </div>
+      ))}
       {!inGame && status === "spectator" && <BetPlacer />}
       {status === "playing" && <Plays player={player} />}
       {status === "bust" && <div>BUST</div>}

@@ -8,10 +8,8 @@ const Player = (id, name) => ({
   room: "", //current room
   status: PLAYER_STATUS.spectator,
   wallet: 1000,
-  hand: [],
-  split: false,
-  hands: [[], []],
-  bet: 0,
+  hands: [[]],
+  bets: [],
 });
 
 const createPlayer = (id, name) => {
@@ -29,10 +27,8 @@ const findPlayer = (id, name) =>
 const resetPlayer = (id) => {
   const player = findPlayer(id);
   player.status = PLAYER_STATUS.spectator;
-  player.hand = [];
-  player.split = false;
-  player.hands = [[], []];
-  player.bet = 0;
+  player.hands = [[]];
+  player.bets = [];
   return player;
 };
 

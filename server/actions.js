@@ -15,6 +15,7 @@ const {
   isBust,
   bestScore,
   determineWinner,
+  delay
 } = require("./utils.js");
 
 const joinRoom = (socket, _io, roomName, playerName) => {
@@ -52,6 +53,7 @@ const joinRoom = (socket, _io, roomName, playerName) => {
   socket.emit("game-status", inGame);
 };
 
+
 const leaveRoom = (socket, io) => {
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
@@ -63,11 +65,11 @@ const leaveRoom = (socket, io) => {
   log(message);
   Dealer.tossed = [
     ...Dealer.tossed,
-    ...player.hand,
-    ...player.hands[0],
-    ...player.hands[1],
+    ...player.hands.flat(),
   ];
-  Dealer.wallet += player.bet;
+  if(player.bets){
+    Dealer.wallet += player.bets.reduce((sum, bet) => sum + bet, 0);
+  }
   io.in(name).emit("dealer-received", Dealer);
 
   socket.leave(name);
@@ -124,12 +126,9 @@ const closeOutGame = (_socket, io, roomName) => {
     player.status = PLAYER_STATUS.spectator;
     room.Dealer.tossed = [
       ...room.Dealer.tossed,
-      ...player.hand,
-      ...player.hands[0],
-      ...player.hands[1],
+      ...player.hands.flat(),
     ];
-    player.hand = [];
-    player.hands = [[], []];
+    player.hands = [[]];
     io.in(room.name).emit("player-received", player);
   });
 
@@ -148,11 +147,14 @@ const enablePlayers = (_socket, io, roomName) => {
   );
 
   readyPlayers.forEach((player) => {
-    if (hasBlackJack(player.hand)) {
-      player.status = PLAYER_STATUS.win;
-      player.wallet += (3 / 2) * player.bet + player.bet;
-      room.Dealer.wallet -= (3 / 2) * player.bet;
-      player.bet = 0;
+    const hand = player.hands[0];
+    const bet = player.bets[0];
+
+    if (hasBlackJack(hand)) {
+      player.status = PLAYER_STATUS.won;
+      player.wallet += (3 / 2) * bet + bet;
+      room.Dealer.wallet -= (3 / 2) * bet;
+      player.bets[0] = 0;
     } else {
       player.status = PLAYER_STATUS.playing;
     }
@@ -179,17 +181,17 @@ const dealerBlackJack = (_socket, io, roomName) => {
   );
 
   readyPlayers.forEach((player) => {
-    const outCome = compareHands(room.Dealer.hand, player.hand);
+    const outCome = compareHands(room.Dealer.hand, player.hands[0]);
 
     if (outCome === OUTCOMES.Push) {
       player.status = PLAYER_STATUS.push;
-      player.wallet += player.bet;
-      player.bet = 0;
+      player.wallet += player.bets[0];
     } else if (outCome === OUTCOMES.Dealer) {
       player.status = PLAYER_STATUS.lost;
-      room.Dealer.wallet += player.bet;
-      player.bet = 0;
+      room.Dealer.wallet += player.bets[0];
     }
+    player.bets = [0];
+    
     io.in(room.name).emit("player-received", player);
   });
   setTimeout(() => {
@@ -201,9 +203,10 @@ const dealCards = (_socket, io, roomName) => {
   log("dealingCards");
   const room = findRoom(roomName);
 
-  const readyPlayers = Object.values(room.Players).filter(
-    ({ status }) => status === PLAYER_STATUS.ready
-  );
+  // Use findPlayer function to get player objects from the room
+  const readyPlayers = Object.values(room.Players)
+    .map(({ id, name }) => findPlayer(id, name))
+    .filter(({ status }) => status === PLAYER_STATUS.ready);
 
   const dealingOrder = [...readyPlayers, "Dealer", ...readyPlayers, "Dealer"];
 
@@ -220,9 +223,9 @@ const dealCards = (_socket, io, roomName) => {
     io.in(room.name).emit("message-received", newMessage);
     const card = room.Dealer.deck.pop();
     if (dealingOrder[i] === "Dealer") {
-      room.Dealer.hand.push(card);
+      room.Dealer.hand.push(card); // Use hands[0] to push the card
     } else {
-      dealingOrder[i].hand.push(card);
+      dealingOrder[i].hands[0].push(card); // Use hands[0] to push the card
       io.in(room.name).emit("player-received", dealingOrder[i]);
     }
     io.in(room.name).emit("dealer-received", room.Dealer);
@@ -277,7 +280,7 @@ const placeBet = (socket, io, amount) => {
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
   if (!room.inGame) {
-    player.bet = amount;
+    player.bets = [amount];
     player.wallet -= amount;
     player.status = PLAYER_STATUS.ready;
     io.in(room.name).emit("player-received", player);
@@ -294,76 +297,54 @@ const determineWinners = (_socket, io, roomName) => {
   const stayedPlayers = Object.values(Players).filter(
     (player) => player.status === PLAYER_STATUS.stay
   );
+
   if (isBust(Dealer.hand)) {
     stayedPlayers.forEach((player) => {
-      player.wallet += player.bet * 2;
-      player.status = PLAYER_STATUS.winner;
-      Dealer.wallet -= player.bet;
-      player.bet = 0;
+      player.bets.forEach((bet, i) => {
+        player.wallet += bet * 2;
+        Dealer.wallet -= bet;
+        player.bets[i] = 0;
+      });
+      player.status = PLAYER_STATUS.won;
       io.in(name).emit("player-received", player);
-      io.in(name).emit("dealer-received", Dealer);
     });
   } else {
     stayedPlayers.forEach((player) => {
-      if (player.split) {
-        const outComes = [];
-        const bustedHands = player.hands.filter(({ length }) => !length).length;
-        player.hands.forEach((hand) => {
-          if (!hand.length) {
-            outComes.push(OUTCOMES.Dealer);
-            return;
-          }
-
-          const oc = compareHands(Dealer.hand, hand);
-          if (!bustedHands) {
-            if (oc === OUTCOMES.Push) {
-              outComes.push(OUTCOMES.Push);
-              player.wallet += player.bet / 2;
-            } else if (oc === OUTCOMES.Player) {
-              outComes.push(OUTCOMES.Player);
-              player.wallet += player.bet;
-              Dealer.wallet -= player.bet / 2;
-            } else {
-              outComes.push(OUTCOMES.Dealer);
-              Dealer.wallet += player.bet / 2;
-            }
-          } else {
-            if (oc === OUTCOMES.Push) {
-              outComes.push(OUTCOMES.Push);
-              player.wallet += player.bet;
-            } else if (oc === OUTCOMES.Player) {
-              outComes.push(OUTCOMES.Player);
-              player.wallet += player.bet * 2;
-              Dealer.wallet -= player.bet;
-            } else {
-              outComes.push(OUTCOMES.Dealer);
-              Dealer.wallet += player.bet;
-            }
-          }
-        });
-
-        player.status = determineWinner(outComes);
-        player.split = false;
-      } else {
-        const outcome = compareHands(Dealer.hand, player.hand);
-        if (outcome === OUTCOMES.Push) {
-          player.wallet += player.bet;
-          player.status = PLAYER_STATUS.push;
-        } else if (outcome === OUTCOMES.Player) {
-          player.wallet += player.bet * 2;
-          player.status = PLAYER_STATUS.win;
-          Dealer.wallet -= player.bet;
-        } else {
-          player.status = PLAYER_STATUS.lost;
-          Dealer.wallet += player.bet;
+      const outComes = [];
+      player.hands.forEach((hand, handIndex) => {
+        const bet = player.bets[handIndex];
+        if(bet === 0){
+          outComes.push(OUTCOMES.Dealer);
+          return
         }
-      }
+        const oc = compareHands(Dealer.hand, hand);
 
-      player.bet = 0;
-      io.in(name).emit("dealer-received", Dealer);
+        if (oc === OUTCOMES.Push) {
+          outComes.push(OUTCOMES.Push);
+          player.wallet += bet;
+        } else if (oc === OUTCOMES.Player) {
+          outComes.push(OUTCOMES.Player);
+          player.wallet += bet * 2;
+          Dealer.wallet -= bet;
+        } else {
+          outComes.push(OUTCOMES.Dealer);
+          Dealer.wallet += bet;
+        }
+        player.bets[handIndex] = 0;
+      });
+
+      const winner = determineWinner(outComes);
+
+      if(winner === OUTCOMES.Player) player.status = PLAYER_STATUS.won
+      else if (winner === OUTCOMES.Dealer) player.status = PLAYER_STATUS.lost
+      else player.status = PLAYER_STATUS.push
+
       io.in(name).emit("player-received", player);
     });
   }
+
+  io.in(name).emit("dealer-received", Dealer);
+
   setTimeout(() => {
     closeOutGame(_socket, io, roomName);
   }, 3000);
@@ -395,7 +376,6 @@ const endGame = (_socket, io, roomName) => {
 const checkGameOver = (socket, io, roomName) => {
   const room = findRoom(roomName);
 
-  // Check if all players
   const allPlayersDone = Object.values(room.Players).every(
     (player) => player.status !== PLAYER_STATUS.playing
   );
@@ -404,22 +384,22 @@ const checkGameOver = (socket, io, roomName) => {
   }
 };
 
-const hit = (socket, io) => {
+const hit = (socket, io, handIndex) => {
   log(`Hit request from ${socket.id}`);
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
 
   const card = room.Dealer.deck.pop();
-  player.hand.push(card);
+  const hand = player.hands[handIndex];
+  hand.push(card);
 
-  if (isBust(player.hand)) {
-    player.status = PLAYER_STATUS.bust;
-    room.Dealer.wallet += player.bet;
-    player.bet = 0;
-  }
+  if (isBust(hand)) {
+    room.Dealer.wallet += player.bets[handIndex];
+    player.bets[handIndex] = 0;
 
-  if (bestScore(player.hand) === 21) {
-    player.status = PLAYER_STATUS.stay;
+    if (player.hands.every(hand => isBust(hand))) {
+        player.status = PLAYER_STATUS.bust;
+    }
   }
 
   io.in(room.name).emit("dealer-received", room.Dealer);
@@ -437,42 +417,26 @@ const stay = (socket, io) => {
   checkGameOver(socket, io, room.name);
 };
 
-const split = (socket, io) => {
+const split = async (socket, io, handIndexToSplit) => {
+  log(handIndexToSplit)
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
+  const handToSplit = player.hands[handIndexToSplit];
+  const bet = player.bets[handIndexToSplit]
 
-  player.split = true;
-  player.hands = [[player.hand[0]], [player.hand[1]]];
-  player.hand = [];
-  player.wallet -= player.bet;
-  player.bet *= 2;
+  player.hands.push([handToSplit.pop()]);
+  player.wallet -= bet;
+  player.bets.push(0 + bet);
 
+  handToSplit.push(room.Dealer.deck.pop());
   io.in(room.name).emit("player-received", player);
-};
-
-const splitHit = (socket, io, handIndex) => {
-  const player = findPlayer(socket.id);
-  const room = findRoom(player.room);
-
-  const hand = player.hands[handIndex];
-  const card = room.Dealer.deck.pop();
-  hand.push(card);
-  if (isBust(hand)) {
-    room.Dealer.tossed = [...room.Dealer.tossed, ...hand];
-    player.hands[handIndex] = [];
-    player.bet /= 2;
-    room.Dealer.wallet += player.bet;
-  }
-
-  if (player.hands.every(({ length }) => !length)) {
-    player.status = PLAYER_STATUS.bust;
-    room.Dealer.wallet += player.bet;
-    player.bet = 0;
-  }
-
   io.in(room.name).emit("dealer-received", room.Dealer);
+
+  await delay(1000);
+
+  player.hands[player.hands.length - 1].push(room.Dealer.deck.pop());
   io.in(room.name).emit("player-received", player);
-  checkGameOver(socket, io, room.name);
+  io.in(room.name).emit("dealer-received", room.Dealer);
 };
 
 const doubleDown = (socket, io) => {
@@ -480,14 +444,16 @@ const doubleDown = (socket, io) => {
   const room = findRoom(player.room);
 
   const card = room.Dealer.deck.pop();
-  player.hand.push(card);
-  player.wallet -= player.bet;
-  player.bet *= 2;
+  player.hands[0].push(card);
+  player.wallet -= player.bets[0];
+  player.bets[0] *= 2;
+  io.in(room.name).emit("player-received", player);
 
-  if (isBust(player.hand)) {
+
+  if (isBust(player.hands[0])) {
     player.status = PLAYER_STATUS.bust;
-    room.Dealer.wallet += player.bet;
-    player.bet = 0;
+    room.Dealer.wallet += player.bets[0];
+    player.bets = [0];
   } else {
     player.status = PLAYER_STATUS.stay;
   }
@@ -506,5 +472,4 @@ module.exports = {
   stay,
   split,
   doubleDown,
-  splitHit,
 };

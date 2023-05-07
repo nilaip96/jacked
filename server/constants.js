@@ -4,7 +4,7 @@ const PLAYER_STATUS = {
   playing: "playing",
   bust: "bust",
   stay: "stay",
-  win: "win",
+  won: "won",
   push: "push",
   lost: "lost",
 };

@@ -1,3 +1,5 @@
+import { WEIGHT } from './Constants.js';
+
 export const getRandomPosition = () => {
   const x = 3 + Math.floor(Math.random() * 94);
   const y = 3 + Math.floor(Math.random() * 94);
@@ -130,3 +132,20 @@ export const getRandomSaturatedLightColor = () => {
 
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 };
+
+ export const minValue = (hand) =>
+  hand.reduce((acc, { value }) => Math.min(...WEIGHT[value]) + acc, 0);
+export  const maxValue = (hand) =>
+  hand.reduce((acc, { value }) => Math.max(...WEIGHT[value]) + acc, 0);
+
+ export const bestScore = (hand) => {
+  let maxScore = maxValue(hand);
+  let minScore = minValue(hand);
+
+  if (maxScore > 21) {
+    return minScore;
+  } else {
+    return maxScore;
+  }
+};
+export const isBust = (hand) => minValue(hand) > 21;

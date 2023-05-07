@@ -8,7 +8,6 @@ const {
   stay,
   doubleDown,
   split,
-  splitHit,
 } = require("./actions.js");
 const { log } = console;
 
@@ -44,20 +43,16 @@ module.exports.socket = (server) => {
       placeBet(socket, io, amount);
     });
 
-    socket.on("hit", () => {
-      hit(socket, io);
+    socket.on("hit", (index) => {
+      hit(socket, io, index);
     });
 
     socket.on("stay", () => {
       stay(socket, io);
     });
 
-    socket.on("split", () => {
-      split(socket, io);
-    });
-
-    socket.on("split-hit", (index) => {
-      splitHit(socket, io, index);
+    socket.on("split", (index) => {
+      split(socket, io, index);
     });
 
     socket.on("double-down", () => {

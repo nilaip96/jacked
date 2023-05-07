@@ -1,6 +1,8 @@
 const { WEIGHT, SUITS, OUTCOMES } = require("./constants.js");
 const { Card } = require("./models/card.js");
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const getCurrentTimeInHoursAndMinutes = () => {
   const now = new Date();
   const hours = now.getHours();
@@ -83,9 +85,9 @@ const analyzeOutComes = (outcomes) =>
   outcomes.reduce(
     (acc, currVal) =>
       currVal === OUTCOMES.Player
-        ? acc++
+        ? acc + 1
         : currVal === OUTCOMES.Dealer
-        ? acc--
+        ? acc - 1
         : acc,
     0
   );
@@ -100,6 +102,7 @@ const determineWinner = (outcomes) => {
     : OUTCOMES.Dealer;
 };
 
+
 module.exports = {
   compareHands,
   isBust,
@@ -110,4 +113,5 @@ module.exports = {
   bestScore,
   determineWinner,
   analyzeOutComes,
+  delay
 };
