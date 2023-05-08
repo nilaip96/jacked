@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSocket } from "../SocketContext.js";
+import { useSocket } from "../../SocketContext.js";
 
 import Card from "./Card.js";
 import Deck from "./Deck.js";
-import { bestScore } from "../utils.js";
+import { bestScore } from "../../utils.js";
 
 const Dealer = () => {
   const socket = useSocket();
@@ -43,7 +43,6 @@ const Dealer = () => {
         )}
       </div>
       <div>{bestScore(hand)}</div>
-
       <div>{`Tossed Count: ${tossed.length}`}</div>
       <div>{`Deck Count: ${deck.length}`}</div>
       <Deck deck={deck} />

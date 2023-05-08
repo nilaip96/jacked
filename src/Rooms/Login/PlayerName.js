@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "./Input.css";
+import "../Input.css";
 import { motion, useAnimation } from "framer-motion";
 import {
   startTypingAnimation,

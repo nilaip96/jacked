@@ -1,5 +1,5 @@
 import React from "react";
-import Rooms from "./Rooms.js";
+import Rooms from "./Rooms/Rooms.js";
 import { SocketProvider } from "./SocketContext";
 import "./Styles.css";
 

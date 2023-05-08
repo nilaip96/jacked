@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Login from "./Components/Login.js";
-import GrassyRoom from "./Components/GrassyRoom.js";
-import { useSocket } from "./SocketContext";
+import Login from "./Login/Login.js";
+import GrassyRoom from "./GrassyRoom/GrassyRoom.js";
+import { useSocket } from "../SocketContext.js";
+import GrassyRoom2 from "./GrassyRoom2/Room.js";
 
 const Rooms = () => {
   const socket = useSocket();
@@ -19,7 +20,17 @@ const Rooms = () => {
     };
   });
 
-  return <>{room === "" ? <Login /> : <GrassyRoom />}</>;
+  return (
+    <>
+      {room === "" ? (
+        <Login />
+      ) : room === "test" ? (
+        <GrassyRoom2 />
+      ) : (
+        <GrassyRoom />
+      )}
+    </>
+  );
 };
 
 export default Rooms;

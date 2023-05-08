@@ -8,7 +8,7 @@ import {
   getRandomBrownColor,
   getRandomHeight,
   getRandomSize,
-} from "../utils.js";
+} from "../../utils.js";
 
 const Grass = ({
   left,
@@ -42,17 +42,16 @@ const Flower = ({
   horizontalShift,
   zIndex,
 }) => {
-  const style = {
-    left,
-    top,
-    fontSize: `${size + 10}px`,
-    color,
-    animationDuration: windTime,
-    transform: `translateX(${horizontalShift}px)`,
-    zIndex: zIndex,
-  };
-
   const flower = useMemo(() => {
+    const style = {
+      left,
+      top,
+      fontSize: `${size + 8}px`,
+      color,
+      animationDuration: windTime,
+      transform: `translateX(${horizontalShift}px)`,
+      zIndex: zIndex,
+    };
     const flowers = [
       <div className="Flower" style={style}>
         &hearts;
@@ -70,7 +69,7 @@ const Flower = ({
 
     const randomNumber = Math.floor(Math.random() * flowers.length);
     return flowers[randomNumber];
-  }, []);
+  }, [color, horizontalShift, left, size, top, windTime, zIndex]);
 
   return flower;
 };

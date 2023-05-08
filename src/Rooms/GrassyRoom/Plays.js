@@ -1,7 +1,7 @@
 import React from "react";
-import { useSocket } from "../SocketContext.js";
-import { isBust, bestScore } from "../utils.js";
-import { WEIGHT } from "../Constants.js";
+import { useSocket } from "../../SocketContext.js";
+import { isBust, bestScore } from "../../utils.js";
+import { WEIGHT } from "../../Constants.js";
 
 const Plays = ({ player }) => {
   const { hands } = player;

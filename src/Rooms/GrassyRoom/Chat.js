@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSocket } from "../SocketContext.js";
+import { useSocket } from "../../SocketContext.js";
 import "./Chat.css";
 
 const Chat = () => {

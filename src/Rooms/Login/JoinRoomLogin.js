@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useSocket } from "../SocketContext.js";
-import "./Input.css";
+import { useSocket } from "../../SocketContext.js";
+import "../Input.css";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import {
   startInputAnimation,

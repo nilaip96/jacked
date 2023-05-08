@@ -10,6 +10,7 @@ const Player = (id, name) => ({
   wallet: 1000,
   hands: [[]],
   bets: [],
+  position: { top: "50%", left: "50%" },
 });
 
 const createPlayer = (id, name) => {

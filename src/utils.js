@@ -8,7 +8,7 @@ export const getRandomPosition = () => {
     top: `${y}%`,
     leftFlower: `${x - 0.33}%`,
     topFlower: `${y - 1.4}%`,
-    zIndex: y - 1000,
+    zIndex: getZIndex(y),
     windTime: `${x / 30 + 1}s `,
   };
 };
@@ -150,3 +150,5 @@ export const bestScore = (hand) => {
   }
 };
 export const isBust = (hand) => minValue(hand) > 21;
+
+export const getZIndex = (y) => y - 1000;

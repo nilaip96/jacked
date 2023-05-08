@@ -10,7 +10,7 @@ import {
   getRandomTwinkleTime,
   getRandomSize,
   getRandomLightColor,
-} from "../utils.js";
+} from "../../utils.js";
 
 const Star = ({ left, top, twinkleTime, size, color }) => (
   <div

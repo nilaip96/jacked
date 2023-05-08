@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSocket } from "../SocketContext.js";
+import { useSocket } from "../../SocketContext.js";
 import Player from "./Player.js";
 import "./Players.css";
 import You from "./You.js";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useSocket } from "../SocketContext.js";
-import "./Input.css";
+import { useSocket } from "../../SocketContext.js";
+import "../Input.css";
 
 const JoinRoom = ({ name }) => {
   const socket = useSocket();

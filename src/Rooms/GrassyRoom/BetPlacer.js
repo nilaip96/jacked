@@ -1,5 +1,5 @@
 import React from "react";
-import { useSocket } from "../SocketContext.js";
+import { useSocket } from "../../SocketContext.js";
 
 const BetPlacer = () => {
   const socket = useSocket();

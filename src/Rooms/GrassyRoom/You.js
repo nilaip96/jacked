@@ -3,7 +3,7 @@ import "./Player.css";
 import Card from "./Card.js";
 import BetPlacer from "./BetPlacer.js";
 import Plays from "./Plays.js";
-import { bestScore } from "../utils";
+import { bestScore } from "../../utils.js";
 
 const You = ({ player, inGame }) => {
   const { name, status, wallet = 0, hands = [], bets = [] } = player;
