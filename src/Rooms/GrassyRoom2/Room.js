@@ -3,24 +3,29 @@ import React, { useState, useEffect } from "react";
 // import Chat from "./Chat";
 import GrassyBackground from "./GrassyBackground.js";
 // import Dealer from "./Dealer.js";
-import Player from "./Player.js";
+import Players from "./Players.js";
 import "./GrassyRoom.css";
 import "./Dot.css";
+import { useSocket } from "../../SocketContext.js";
+import SyncRoom from "../SyncRoom.js"
 
-const Room = () => {
-  const [position, setPosition] = useState({ x: 10, y: 10 });
+  
+  
+  const Room = () => {
+    const socket = useSocket();
+  
+    const placeMove = (direction) => {
+      socket.emit("move", direction);
+    };
 
   const handleKeyPress = (event) => {
-    console.log(event.key);
-    const { x, y } = position;
-
-    if (event.key === "ArrowUp") setPosition({ x, y: Math.max(0, y - 1.5) });
-    else if (event.key === "ArrowDown")
-      setPosition({ x, y: Math.min(100, y + 1.5) });
-    else if (event.key === "ArrowLeft")
-      setPosition({ x: Math.max(0, x - 1.5), y });
-    else if (event.key === "ArrowRight")
-      setPosition({ x: Math.min(100, x + 1.5), y });
+    if (event.key === "ArrowUp") placeMove("up")
+    else if (event.key === "ArrowDown") placeMove("down")
+    else if (event.key === "ArrowLeft") placeMove("left")
+    else if (event.key === "ArrowRight") placeMove("right")
+    else if (event.key === "space"){
+      //
+    }
   };
 
   useEffect(() => {
@@ -31,8 +36,9 @@ const Room = () => {
 
   return (
     <div className="grassy-room" onKeyDown={handleKeyPress} tabIndex={-1}>
-      <Player position={position} />
+      <Players  />
       <GrassyBackground />
+      <SyncRoom/>
     </div>
   );
 };

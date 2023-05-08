@@ -46,7 +46,7 @@ const Flower = ({
     const style = {
       left,
       top,
-      fontSize: `${size + 10}px`,
+      fontSize: `${size + 12}px`,
       color,
       animationDuration: windTime,
       transform: `translateX(${horizontalShift}px)`,
@@ -90,7 +90,7 @@ const Dirt = ({ left, top, size, backgroundColor }) => (
 const GrassyBackground = React.memo(() => {
   const ground = useMemo(() => {
     const newGround = [];
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 200; i++) {
       const randomPosition = getRandomPosition();
       newGround.push(
         <Grass
@@ -118,7 +118,7 @@ const GrassyBackground = React.memo(() => {
           />
         );
       }
-      if (i % 50 === 0) {
+      if (i % 15 === 0) {
         const randomDirtPosition = getRandomPosition();
         newGround.push(
           <Dirt

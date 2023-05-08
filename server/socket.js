@@ -8,6 +8,8 @@ const {
   stay,
   doubleDown,
   split,
+  move,
+  syncRoom
 } = require("./actions.js");
 const { log } = console;
 
@@ -26,6 +28,10 @@ module.exports.socket = (server) => {
     socket.on("join-room", (roomName, playerName) => {
       joinRoom(socket, io, roomName, playerName);
     });
+
+    socket.on("sync-room", () => {
+      syncRoom(socket, io);
+    })
 
     socket.on("leave-room", () => {
       leaveRoom(socket, io);
@@ -58,5 +64,9 @@ module.exports.socket = (server) => {
     socket.on("double-down", () => {
       doubleDown(socket, io);
     });
+
+    socket.on("move", (direction)=> {
+      move(socket, io, direction);
+    })
   });
 };

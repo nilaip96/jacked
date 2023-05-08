@@ -4,9 +4,10 @@ let id = 0;
 
 const Messages = [];
 
-const Message = (text, source) => ({
+const Message = (text, source, name) => ({
   id: id,
   source: source,
+  name: name,
   text: text,
   time: getCurrentTimeInHoursAndMinutes(),
 });
