@@ -8,12 +8,29 @@ import "./GrassyRoom.css";
 import "./Dot.css";
 import { useSocket } from "../../SocketContext.js";
 import SyncRoom from "../SyncRoom.js";
+import Chat from "./Chat.js";
 
 const Room = () => {
   const socket = useSocket();
   const [players, setPlayers] = useState({});
   const { id } = socket;
   const [inGame, setInGame] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [chatOpen, setChatOpen] = useState(false);
+
+  useEffect(() => {
+    const messageEvent = (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    };
+    const messagesEvent = (messages) => {
+      setMessages(messages);
+    };
+    socket.on("message-received", messageEvent);
+    socket.on("messages-received", messagesEvent);
+    return () => {
+      socket.off("message-received", messageEvent);
+    };
+  }, [socket]);
 
   useEffect(() => {
     const playersEvent = (newPlayers) => {
@@ -59,25 +76,44 @@ const Room = () => {
   };
 
   const handleKeyPress = (event) => {
+    if (chatOpen) return;
+
     const { key } = event;
-    event.preventDefault();
     const you = players[id];
     if (!you) return;
-
     const currentBet = you.bets.reduce((acc, cur) => acc + cur, 0);
+
+    const moveKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+    const shouldPreventDefault =
+      moveKeys.includes(key) || (key === " " && !inGame);
+    if (shouldPreventDefault) event.preventDefault();
 
     if (key === "ArrowUp") placeMove("up");
     else if (key === "ArrowDown") placeMove("down");
     else if (key === "ArrowLeft") placeMove("left");
     else if (key === "ArrowRight") placeMove("right");
     else if (key === " " && !inGame) placeBet(currentBet + 25);
+    else if (key === "Enter") openChat();
+  };
+
+  const closeChat = () => {
+    setChatOpen(false);
+    document.querySelector(".grassy-room").focus();
+  };
+
+  const openChat = () => {
+    setChatOpen(true);
+    setTimeout(() => {
+      document.querySelector(".transparent-input").focus();
+    }, 100);
   };
 
   return (
     <div className="grassy-room" onKeyDown={handleKeyPress} tabIndex={-1}>
-      <Players players={Object.values(players)} />
+      <Players players={Object.values(players)} messages={messages} />
       <GrassyBackground />
       <SyncRoom />
+      <Chat chatOpen={chatOpen} messages={messages} closeChat={closeChat} />
     </div>
   );
 };

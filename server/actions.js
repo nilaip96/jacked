@@ -105,7 +105,7 @@ const sendMessage = (socket, io, message) => {
   log(`Message from ${socket.id}: ${message}`);
   const player = findPlayer(socket.id);
   const { Messages, name } = findRoom(player.room);
-  const newMessage = createMessage(message, player.name);
+  const newMessage = createMessage(message, player.id, player.name);
 
   Messages.push(newMessage);
   io.in(name).emit("message-received", newMessage);

@@ -40,8 +40,8 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="chat-messages">
-        {messages.map(({ text, source, time }, i) => (
-          <div key={i}>{`${time} || ${source} || ${text}`}</div>
+        {messages.map(({ text, source, time, playerName }, i) => (
+          <div key={i}>{`${time} || ${playerName || source} || ${text}`}</div>
         ))}
         <div ref={messagesEndRef}></div>
       </div>

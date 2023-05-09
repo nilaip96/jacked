@@ -31,7 +31,7 @@ const Login = () => {
   const controls = useAnimation();
   const stars = useMemo(() => {
     const newStars = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       const randomPosition = getRandomPosition();
       newStars.push(
         <Star
