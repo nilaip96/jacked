@@ -8,7 +8,7 @@ const Player = ({ player, messages }) => {
   const [message, setMessage] = useState("");
   const timer = useRef(null);
 
-  useEffect(() => {
+  const handleMessages = () => {
     if (messages.length) {
       const lastMessage = messages.slice(-1)[0];
       if (lastMessage.source === id) {
@@ -18,13 +18,15 @@ const Player = ({ player, messages }) => {
         setMessage(lastMessage.text);
         timer.current = setTimeout(() => {
           setMessage("");
-        }, 5000);
+        }, 3000);
       }
     }
     return () => {
       clearTimeout(timer.current);
     };
-  }, [messages, id, setMessage]);
+  };
+
+  useEffect(handleMessages, [messages, id, setMessage]);
 
   return (
     <div

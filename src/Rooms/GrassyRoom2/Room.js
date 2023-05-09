@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import JoinRoom from "./GrassyRoom/JoinRoom";
 // import Chat from "./Chat";
 import GrassyBackground from "./GrassyBackground.js";
-// import Dealer from "./Dealer.js";
+import Dealer from "./Dealer.js";
 import Players from "./Players.js";
 import "./GrassyRoom.css";
 import "./Dot.css";
@@ -17,8 +17,20 @@ const Room = () => {
   const [inGame, setInGame] = useState(false);
   const [messages, setMessages] = useState([]);
   const [chatOpen, setChatOpen] = useState(false);
+  const [dealer, setDealer] = useState({
+    deck: [],
+    hand: [],
+    tossed: [],
+    hidden: false,
+    wallet: 0,
+    position: { x: 50, y: 10 },
+  });
 
-  useEffect(() => {
+  const onLoad = () => {
+    document.querySelector(".grassy-room").focus();
+  };
+
+  const handleMessages = () => {
     const messageEvent = (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     };
@@ -30,9 +42,9 @@ const Room = () => {
     return () => {
       socket.off("message-received", messageEvent);
     };
-  }, [socket]);
+  };
 
-  useEffect(() => {
+  const handlePlayers = () => {
     const playersEvent = (newPlayers) => {
       setPlayers(newPlayers);
     };
@@ -61,11 +73,19 @@ const Room = () => {
     return () => {
       socket.off("player-received", playerEvent);
     };
-  }, [players, socket]);
+  };
 
-  useEffect(() => {
-    document.querySelector(".grassy-room").focus();
-  }, []);
+  const handleDealer = () => {
+    const dealerEvent = (newDealer) => {
+      setDealer(() => newDealer);
+    };
+
+    socket.on("dealer-received", dealerEvent);
+
+    return () => {
+      socket.off("dealer-received", dealerEvent);
+    };
+  };
 
   const placeMove = (direction) => {
     socket.emit("move", direction);
@@ -108,11 +128,17 @@ const Room = () => {
     }, 100);
   };
 
+  useEffect(handleDealer, [dealer, socket]);
+  useEffect(handleMessages, [socket]);
+  useEffect(handlePlayers, [players, socket]);
+  useEffect(onLoad, []);
+
   return (
     <div className="grassy-room" onKeyDown={handleKeyPress} tabIndex={-1}>
       <Players players={Object.values(players)} messages={messages} />
       <GrassyBackground />
       <SyncRoom />
+      <Dealer dealer={dealer} />
       <Chat chatOpen={chatOpen} messages={messages} closeChat={closeChat} />
     </div>
   );
