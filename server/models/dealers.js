@@ -12,6 +12,7 @@ const Dealer = () => ({
   hidden: true,
   wallet: 100000000,
   id: id,
+  position: { x: 50, y: 10 },
 });
 
 const createDealer = () => {

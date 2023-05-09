@@ -9,7 +9,7 @@ const JoinRoom = ({ name }) => {
   const joinRoom = (event) => {
     event.preventDefault();
     if (room.length === 0) return;
-    socket.emit("leave-room").emit("join-room", room, name);
+    socket.emit("leave-room").emit("join-room", room, name).emit("sync-room");
   };
 
   return (

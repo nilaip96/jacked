@@ -12,8 +12,11 @@ const Chat = () => {
     const messageEvent = (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     };
+    const messagesEvent = (messages) => {
+      setMessages(messages);
+    };
     socket.on("message-received", messageEvent);
-
+    socket.on("messages-received", messagesEvent);
     return () => {
       socket.off("message-received", messageEvent);
     };

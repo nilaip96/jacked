@@ -22,7 +22,7 @@ const joinRoom = (socket, _io, roomName, playerName) => {
   const player = findPlayer(socket.id, playerName);
   if (!playerName) playerName = player.name;
   const room = findRoom(roomName);
-  
+
   const { length } = Object.values(room.Players);
   if (room.inGame && !length) {
     room.inGame = false;
@@ -45,20 +45,17 @@ const joinRoom = (socket, _io, roomName, playerName) => {
   log(`User ${socket.id}, ${message}`);
 };
 
-const syncRoom = (socket, _io)  => {
-  log('syncingRoom')
+const syncRoom = (socket, _io) => {
+  log("syncingRoom");
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
   const { Messages, Players, Dealer, inGame } = room;
-  
-  //Sync up player with old messages and game status
-  Messages.forEach((message) => {
-    socket.emit("message-received", message);
-  });
+
+  socket.emit("messages-received", Messages);
   socket.emit("players-received", Players);
   socket.emit("dealer-received", Dealer);
   socket.emit("game-status", inGame);
-}
+};
 
 const leaveRoom = (socket, io) => {
   const player = findPlayer(socket.id);
@@ -101,7 +98,7 @@ const leaveRoom = (socket, io) => {
     io.in(name).emit("game-status", room.inGame);
   } else if (inGame) {
     checkGameOver(socket, io, room.name);
-  } 
+  }
 };
 
 const sendMessage = (socket, io, message) => {
@@ -465,27 +462,26 @@ const move = (socket, io, direction) => {
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
 
-  const { x,y } = player.position
-  
-  switch(direction) {
-    case 'right':
-      player.position = { x: Math.min(100, x + 1), y }
+  const { x, y } = player.position;
+
+  switch (direction) {
+    case "right":
+      player.position = { x: Math.min(100, x + 1), y };
       break;
-    case 'left':
-      player.position = { x: Math.max(0, x - 1), y }
+    case "left":
+      player.position = { x: Math.max(0, x - 1), y };
       break;
-    case 'up':
-      player.position = { y: Math.max(0, y - 1), x }
+    case "up":
+      player.position = { y: Math.max(0, y - 1), x };
       break;
-    case 'down':
-      player.position = { y: Math.min(100, y + 1), x }
+    case "down":
+      player.position = { y: Math.min(100, y + 1), x };
       break;
     default:
   }
 
   io.in(room.name).emit("player-received", player);
-}
-
+};
 
 module.exports = {
   joinRoom,
@@ -497,5 +493,5 @@ module.exports = {
   split,
   doubleDown,
   move,
-  syncRoom
+  syncRoom,
 };

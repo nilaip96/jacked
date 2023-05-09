@@ -1,21 +1,21 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useSocket } from "../SocketContext";
 
 const SyncRoom = () => {
-  const  socket  = useSocket();
-  const [ isLoaded, setLoaded ] = useState(false)
-  
+  const socket = useSocket();
+  const [isLoaded, setLoaded] = useState(false);
+
   useEffect(() => {
     if (isLoaded) {
-      socket.emit('sync-room'); 
+      socket.emit("sync-room");
     }
   }, [socket, isLoaded]);
 
   useEffect(() => {
-    setLoaded(true)
+    setLoaded(true);
   }, []);
 
-  return null
-}
+  return null;
+};
 
 export default SyncRoom;

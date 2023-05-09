@@ -14,6 +14,7 @@ const Dealer = () => {
     tossed: [],
     hidden: false,
     wallet: 0,
+    position: { x: 50, y: 10 },
   });
 
   useEffect(() => {

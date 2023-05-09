@@ -9,7 +9,7 @@ const {
   doubleDown,
   split,
   move,
-  syncRoom
+  syncRoom,
 } = require("./actions.js");
 const { log } = console;
 
@@ -31,7 +31,7 @@ module.exports.socket = (server) => {
 
     socket.on("sync-room", () => {
       syncRoom(socket, io);
-    })
+    });
 
     socket.on("leave-room", () => {
       leaveRoom(socket, io);
@@ -65,8 +65,8 @@ module.exports.socket = (server) => {
       doubleDown(socket, io);
     });
 
-    socket.on("move", (direction)=> {
+    socket.on("move", (direction) => {
       move(socket, io, direction);
-    })
+    });
   });
 };

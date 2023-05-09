@@ -4,8 +4,7 @@ import Chat from "./Chat";
 import Table from "./Table.js";
 import "./GrassyRoom.css";
 import GrassyBackground from "./GrassyBackground.js";
-import SyncRoom from "../SyncRoom.js"
-
+import SyncRoom from "../SyncRoom.js";
 
 const Room = () => {
   return (
