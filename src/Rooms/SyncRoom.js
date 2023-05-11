@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSocket } from "../SocketContext";
 
 // this is used to sync the room after all react components have loaded

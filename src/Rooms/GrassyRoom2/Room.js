@@ -9,6 +9,8 @@ import "./Dot.css";
 import { useSocket } from "../../SocketContext.js";
 import SyncRoom from "../SyncRoom.js";
 import Chat from "./Chat.js";
+import You from "./You.js";
+import { getAvailablePlays } from "../../utils.js";
 
 const Room = () => {
   const socket = useSocket();
@@ -25,6 +27,9 @@ const Room = () => {
     wallet: 0,
     position: { x: 50, y: 10 },
   });
+  const [you, setYou] = useState(null);
+  const [plays, setPlays] = useState([]);
+  const [selectedPlayIndex, setSelectedPlayIndex] = useState(0);
 
   const onLoad = () => {
     document.querySelector(".grassy-room").focus();
@@ -87,33 +92,62 @@ const Room = () => {
     };
   };
 
-  const placeMove = (direction) => {
-    socket.emit("move", direction);
+  const placeMove = (move_key) => {
+    const DIRECTIONS = {
+      ArrowUp: "up",
+      ArrowDown: "down",
+      ArrowLeft: "left",
+      ArrowRight: "right",
+    };
+
+    socket.emit("move", DIRECTIONS[move_key]);
   };
 
   const placeBet = (bet = 25) => {
     socket.emit("place-bet", bet);
   };
 
+  const executePlay = (play) => {
+    let [indexlessPlay, index] = play.split("-");
+    index = parseInt(index, 10);
+
+    if (indexlessPlay === "stay") {
+      socket.emit("stay");
+    } else if (indexlessPlay === "hit") {
+      socket.emit("hit", index);
+    } else if (indexlessPlay === "split") {
+      socket.emit("split", index);
+    } else if (play.includes("double-down")) {
+      socket.emit("double-down");
+    }
+  };
+
   const handleKeyPress = (event) => {
-    if (chatOpen) return;
+    if (chatOpen || !you) return;
 
     const { key } = event;
-    const you = players[id];
-    if (!you) return;
-    const currentBet = you.bets.reduce((acc, cur) => acc + cur, 0);
-
     const moveKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
     const shouldPreventDefault =
       moveKeys.includes(key) || (key === " " && !inGame);
     if (shouldPreventDefault) event.preventDefault();
 
-    if (key === "ArrowUp") placeMove("up");
-    else if (key === "ArrowDown") placeMove("down");
-    else if (key === "ArrowLeft") placeMove("left");
-    else if (key === "ArrowRight") placeMove("right");
-    else if (key === " " && !inGame) placeBet(currentBet + 25);
-    else if (key === "Enter") openChat();
+    if (key === "Enter") {
+      openChat();
+      return;
+    }
+
+    if (you.status === "playing") {
+      if (key === "ArrowUp")
+        setSelectedPlayIndex(
+          (prevIndex) => (prevIndex - 1 + plays.length) % plays.length
+        );
+      else if (key === "ArrowDown")
+        setSelectedPlayIndex((prevIndex) => (prevIndex + 1) % plays.length);
+      else if (key === " ") executePlay(plays[selectedPlayIndex]);
+    } else {
+      if (moveKeys.some((moveKey) => moveKey === key)) placeMove(key);
+      else if (key === " " && !inGame) placeBet(25);
+    }
   };
 
   const closeChat = () => {
@@ -128,6 +162,15 @@ const Room = () => {
     }, 100);
   };
 
+  const handleYou = () => {
+    if (players[id]) {
+      setYou(players[id]);
+      const availablePlays = getAvailablePlays(players[id]);
+      setPlays(availablePlays);
+    }
+  };
+
+  useEffect(handleYou, [you, players, id]);
   useEffect(handleDealer, [dealer, socket]);
   useEffect(handleMessages, [socket]);
   useEffect(handlePlayers, [players, socket]);
@@ -135,10 +178,16 @@ const Room = () => {
 
   return (
     <div className="grassy-room" onKeyDown={handleKeyPress} tabIndex={-1}>
-      <Players players={Object.values(players)} messages={messages} />
+      <Players players={Object.values(players)} messages={messages} you={id} />
       <GrassyBackground />
       <SyncRoom />
       <Dealer dealer={dealer} />
+      <You
+        player={you}
+        messages={messages}
+        plays={plays}
+        selectedPlayIndex={selectedPlayIndex}
+      />
       <Chat chatOpen={chatOpen} messages={messages} closeChat={closeChat} />
     </div>
   );

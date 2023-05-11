@@ -201,8 +201,8 @@ const dealCards = (_socket, io, roomName) => {
 
   // Use findPlayer function to get player objects from the room
   const readyPlayers = Object.values(room.Players)
-    .map(({ id, name }) => findPlayer(id, name))
-    .filter(({ status }) => status === PLAYER_STATUS.ready);
+    .filter(({ status }) => status === PLAYER_STATUS.ready)
+    .map(({ id }) => id);
 
   const dealingOrder = [...readyPlayers, "Dealer", ...readyPlayers, "Dealer"];
 
@@ -221,8 +221,11 @@ const dealCards = (_socket, io, roomName) => {
     if (dealingOrder[i] === "Dealer") {
       room.Dealer.hand.push(card); // Use hands[0] to push the card
     } else {
-      dealingOrder[i].hands[0].push(card); // Use hands[0] to push the card
-      io.in(room.name).emit("player-received", dealingOrder[i]);
+      const player = findPlayer(dealingOrder[i]);
+      if (player.room === roomName) {
+        player.hands[0].push(card); // Use hands[0] to push the card
+        io.in(room.name).emit("player-received", player);
+      }
     }
     io.in(room.name).emit("dealer-received", room.Dealer);
 
@@ -276,7 +279,7 @@ const placeBet = (socket, io, amount) => {
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
   if (!room.inGame) {
-    player.bets = [amount];
+    player.bets = player.bets.length ? [player.bets[0] + amount] : [amount];
     player.wallet -= amount;
     player.status = PLAYER_STATUS.ready;
     io.in(room.name).emit("player-received", player);
@@ -415,7 +418,7 @@ const stay = (socket, io) => {
 
 const split = async (socket, io, handIndexToSplit) => {
   log(handIndexToSplit);
-  const player = findPlayer(socket.id);
+  let player = findPlayer(socket.id);
   const room = findRoom(player.room);
   const handToSplit = player.hands[handIndexToSplit];
   const bet = player.bets[handIndexToSplit];
@@ -429,6 +432,10 @@ const split = async (socket, io, handIndexToSplit) => {
   io.in(room.name).emit("dealer-received", room.Dealer);
 
   await delay(1000);
+
+  //refresh the player before pushing the card
+  player = findPlayer(socket.id);
+  if (player.room !== room) return;
 
   player.hands[player.hands.length - 1].push(room.Dealer.deck.pop());
   io.in(room.name).emit("player-received", player);

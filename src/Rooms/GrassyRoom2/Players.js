@@ -1,11 +1,14 @@
 import React from "react";
 import Player from "./Player.js";
 
-const Players = ({ players, messages }) => (
+const Players = ({ players, messages, you }) => (
   <>
-    {players.map((player) => (
-      <Player key={player.id} player={player} messages={messages} />
-    ))}
+    {players.map(
+      (player) =>
+        player.id !== you && (
+          <Player key={player.id} player={player} messages={messages} />
+        )
+    )}
   </>
 );
 

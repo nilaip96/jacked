@@ -7,6 +7,7 @@
   width: 30px;
   height: 45px;
   text-align: center;
+  color: var(--ash-black);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
