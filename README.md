@@ -1,7 +1,5 @@
 JACKED
 
-im hella bored lol
-
 ![image](https://user-images.githubusercontent.com/74117524/236121631-cec90167-674d-4ba2-a1e9-204eb55add4a.png)
 ![image](https://github.com/nilaip96/jacked/assets/74117524/bed9ba3a-b879-43db-ab15-c41b2bd9d60d)
 ![image](https://github.com/nilaip96/jacked/assets/74117524/3cbe4d98-faa2-424e-bf65-890313678698)
