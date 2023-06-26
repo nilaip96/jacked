@@ -15,6 +15,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the project directory, you can run:
 
 ### `npm run server`
+
 Runs the server at localhost:3001
 
 ### `npm start`

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Dot.css";
-import { getZIndex } from "../../utils";
+import { getZIndex, bestScore } from "../../utils";
 import Card from "./Card";
 
 const Player = ({ player, messages }) => {
@@ -70,6 +70,7 @@ const Player = ({ player, messages }) => {
             {hand.map((card, i) => (
               <Card card={card} key={`card-${handIndex + i}`} />
             ))}
+            <div>{bestScore(hand)}</div>
           </div>
         ))}
         {status === "bust" && <div>BUST</div>}

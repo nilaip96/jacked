@@ -24,7 +24,7 @@ const Rooms = () => {
     <>
       {room === "" ? (
         <Login />
-      ) : room.startsWith('ground') ? (
+      ) : room.startsWith("ground") ? (
         <GrassyGround />
       ) : (
         <GrassyRoom />

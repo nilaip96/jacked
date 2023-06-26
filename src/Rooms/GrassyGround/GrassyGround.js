@@ -7,16 +7,16 @@ import GrassyBackground from "./GrassyBackground.js";
 import SyncRoom from "../SyncRoom.js";
 
 const Room = () => (
-    <div className="grassy-room">
-      <div className="grassy-room-content">
-        <Table />
-        <Chat />
-        <JoinRoom />
-      </div>
-      <GrassyBackground />
-
-      <SyncRoom />
+  <div className="grassy-room">
+    <div className="grassy-room-content">
+      <Table />
+      <Chat />
+      <JoinRoom />
     </div>
+    <GrassyBackground />
+
+    <SyncRoom />
+  </div>
 );
 
 export default Room;

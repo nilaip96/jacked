@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Dot.css";
-import { getZIndex } from "../../utils";
+import { getZIndex, bestScore } from "../../utils";
 import Card from "./Card";
 
 const You = ({ player, messages = [], plays = [], selectedPlayIndex = 0 }) => {
@@ -60,23 +60,10 @@ const You = ({ player, messages = [], plays = [], selectedPlayIndex = 0 }) => {
       >
         <div>{name}</div>
         <div>{wallet}</div>
-        <div>{bets.reduce((sum, bet) => sum + bet, 0)}</div>
-        <div>{status}</div>
       </div>
+      <div>{bets.reduce((sum, bet) => sum + bet, 0)}</div>
+      <div>{status}</div>
 
-      {hands.map((hand, handIndex) => (
-        <div
-          key={`hand-${handIndex}`}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          {hand.map((card, i) => (
-            <Card card={card} key={`card-${handIndex + i}`} />
-          ))}
-        </div>
-      ))}
       {status === "bust" && <div>BUST</div>}
       {status === "stay" && <div>Stopped</div>}
       {status === "playing" && (
@@ -93,6 +80,20 @@ const You = ({ player, messages = [], plays = [], selectedPlayIndex = 0 }) => {
           ))}
         </>
       )}
+      {hands.map((hand, handIndex) => (
+        <div
+          key={`hand-${handIndex}`}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          {hand.map((card, i) => (
+            <Card card={card} key={`card-${handIndex + i}`} />
+          ))}
+          <div>{bestScore(hand)}</div>
+        </div>
+      ))}
     </div>
   );
 };

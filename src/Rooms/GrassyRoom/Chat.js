@@ -42,26 +42,23 @@ const Chat = ({ chatOpen, messages, closeChat, name }) => {
   };
 
   const joinRoom = () => {
-    const room = inputValue.split(" ")[1]
+    const room = inputValue.split(" ")[1];
     if (!room) return;
     socket.emit("leave-room").emit("join-room", room, name).emit("sync-room");
-    setInputValue("")
+    setInputValue("");
   };
 
   const handleKeyPress = ({ key }) => {
-    if (key !== "Enter") return
-    
+    if (key !== "Enter") return;
+
     if (inputValue === "") {
       closeChat();
-    } else if (inputValue.startsWith('join')){
+    } else if (inputValue.startsWith("join")) {
       joinRoom();
     } else {
       sendMessage();
     }
-    
   };
-
-
 
   if (!chatOpen) return null;
   return (

@@ -2,6 +2,7 @@ import React from "react";
 
 import Card from "./Card.js";
 import Deck from "./Deck.js";
+import { bestScore } from "../../utils.js";
 
 const Dealer = ({ dealer }) => {
   const { hand, deck, tossed, hidden, wallet, position } = dealer;
@@ -18,6 +19,7 @@ const Dealer = ({ dealer }) => {
             <Card card={card} key={i} />
           )
         )}
+        {!hidden && bestScore(hand)}
       </div>
       <div>{`Tossed Count: ${tossed.length}`}</div>
       <div>{`Deck Count: ${deck.length}`}</div>

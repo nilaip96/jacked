@@ -186,7 +186,12 @@ const Room = () => {
         plays={plays}
         selectedPlayIndex={selectedPlayIndex}
       />
-      <Chat chatOpen={chatOpen} messages={messages} closeChat={closeChat} name={you?.name} />
+      <Chat
+        chatOpen={chatOpen}
+        messages={messages}
+        closeChat={closeChat}
+        name={you?.name}
+      />
     </div>
   );
 };
