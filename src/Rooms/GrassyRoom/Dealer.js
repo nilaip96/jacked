@@ -1,37 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useSocket } from "../../SocketContext.js";
+import React from "react";
 
 import Card from "./Card.js";
 import Deck from "./Deck.js";
-import { bestScore } from "../../utils.js";
 
-const Dealer = () => {
-  const socket = useSocket();
-
-  const [dealer, setDealer] = useState({
-    deck: [],
-    hand: [],
-    tossed: [],
-    hidden: false,
-    wallet: 0,
-    position: { x: 50, y: 10 },
-  });
-
-  useEffect(() => {
-    const dealerEvent = (newDealer) => {
-      setDealer(() => newDealer);
-    };
-
-    socket.on("dealer-received", dealerEvent);
-
-    return () => {
-      socket.off("dealer-received", dealerEvent);
-    };
-  }, [dealer, socket]);
-
-  const { hand, deck, tossed, hidden, wallet } = dealer;
+const Dealer = ({ dealer }) => {
+  const { hand, deck, tossed, hidden, wallet, position } = dealer;
+  const { x = 45, y = 10 } = position;
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div style={{ position: "relative", top: `${y}%`, left: `${x}%` }}>
       <div>Dealer</div>
       <div>{wallet}</div>
       <div>
@@ -43,7 +19,6 @@ const Dealer = () => {
           )
         )}
       </div>
-      <div>{bestScore(hand)}</div>
       <div>{`Tossed Count: ${tossed.length}`}</div>
       <div>{`Deck Count: ${deck.length}`}</div>
       <Deck deck={deck} />

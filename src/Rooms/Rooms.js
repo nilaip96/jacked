@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Login from "./Login/Login.js";
-import GrassyRoom from "./GrassyRoom/GrassyRoom.js";
+import GrassyGround from "./GrassyGround/GrassyGround.js";
 import { useSocket } from "../SocketContext.js";
-import GrassyRoom2 from "./GrassyRoom2/Room.js";
+import GrassyRoom from "./GrassyRoom/Room.js";
 
 const Rooms = () => {
   const socket = useSocket();
@@ -24,8 +24,8 @@ const Rooms = () => {
     <>
       {room === "" ? (
         <Login />
-      ) : room === "test" ? (
-        <GrassyRoom2 />
+      ) : room.startsWith('ground') ? (
+        <GrassyGround />
       ) : (
         <GrassyRoom />
       )}

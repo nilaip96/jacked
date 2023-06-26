@@ -435,7 +435,9 @@ const split = async (socket, io, handIndexToSplit) => {
 
   //refresh the player before pushing the card
   player = findPlayer(socket.id);
-  if (player.room !== room) return;
+
+  if (player.room !== room.name) return;
+  log('hand', player.hands[player.hands.length - 1])
 
   player.hands[player.hands.length - 1].push(room.Dealer.deck.pop());
   io.in(room.name).emit("player-received", player);

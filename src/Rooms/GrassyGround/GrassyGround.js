@@ -6,8 +6,7 @@ import "./GrassyRoom.css";
 import GrassyBackground from "./GrassyBackground.js";
 import SyncRoom from "../SyncRoom.js";
 
-const Room = () => {
-  return (
+const Room = () => (
     <div className="grassy-room">
       <div className="grassy-room-content">
         <Table />
@@ -18,7 +17,6 @@ const Room = () => {
 
       <SyncRoom />
     </div>
-  );
-};
+);
 
 export default Room;

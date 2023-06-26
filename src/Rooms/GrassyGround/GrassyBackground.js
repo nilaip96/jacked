@@ -46,7 +46,7 @@ const Flower = ({
     const style = {
       left,
       top,
-      fontSize: `${size + 12}px`,
+      fontSize: `${size + 8}px`,
       color,
       animationDuration: windTime,
       transform: `translateX(${horizontalShift}px)`,
@@ -69,7 +69,7 @@ const Flower = ({
 
     const randomNumber = Math.floor(Math.random() * flowers.length);
     return flowers[randomNumber];
-  }, [left, top, windTime, size, color, horizontalShift, zIndex]);
+  }, [color, horizontalShift, left, size, top, windTime, zIndex]);
 
   return flower;
 };
@@ -90,7 +90,7 @@ const Dirt = ({ left, top, size, backgroundColor }) => (
 const GrassyBackground = React.memo(() => {
   const ground = useMemo(() => {
     const newGround = [];
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 500; i++) {
       const randomPosition = getRandomPosition();
       newGround.push(
         <Grass
@@ -118,7 +118,7 @@ const GrassyBackground = React.memo(() => {
           />
         );
       }
-      if (i % 15 === 0) {
+      if (i % 50 === 0) {
         const randomDirtPosition = getRandomPosition();
         newGround.push(
           <Dirt
