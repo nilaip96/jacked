@@ -1,29 +1,35 @@
 const { createDealer } = require("./dealers.js");
 
-const Rooms = {};
-
-const Room = (name) => ({
-  name: name,
-  Players: {},
-  Messages: [],
-  Dealer: {},
-  inGame: false,
-  startedTimer: false,
-});
-
-const createRoom = (name) => {
-  const newRoom = Room(name);
-  Rooms[name] = newRoom;
-  newRoom.Dealer = createDealer();
-  return newRoom;
-};
-
-const findRoom = (name) => (!Rooms[name] ? createRoom(name) : Rooms[name]);
-
-const deleteRoom = (name) => {
-  if (Rooms[name]) {
-    delete Rooms[name];
+class Rooms {
+  constructor() {
+    this.rooms = {}
   }
-};
 
-module.exports = { findRoom, deleteRoom };
+  room = (name) => ({
+    name: name,
+    Players: {},
+    Messages: [],
+    Dealer: {},
+    inGame: false,
+    startedTimer: false,
+  });
+
+  create = (name) => {
+    const newRoom =  this.room(name);
+    this.rooms[name] = newRoom;
+    newRoom.Dealer = createDealer();
+    return newRoom;
+  }
+
+  find = (name) => (!this.rooms[name] ? this.create(name) : this.rooms[name]);
+
+  delete = (name) => {
+    if (Rooms[name]) {
+      delete Rooms[name];
+    }
+  };
+
+}
+
+
+module.exports = Rooms
