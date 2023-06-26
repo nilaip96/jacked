@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import JoinRoom from "./GrassyRoom/JoinRoom";
-// import Chat from "./Chat";
 import GrassyBackground from "./GrassyBackground.js";
 import Dealer from "./Dealer.js";
 import Players from "./Players.js";
@@ -188,7 +186,7 @@ const Room = () => {
         plays={plays}
         selectedPlayIndex={selectedPlayIndex}
       />
-      <Chat chatOpen={chatOpen} messages={messages} closeChat={closeChat} />
+      <Chat chatOpen={chatOpen} messages={messages} closeChat={closeChat} name={you?.name} />
     </div>
   );
 };
