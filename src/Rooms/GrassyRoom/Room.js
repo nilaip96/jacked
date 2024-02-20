@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import GrassyBackground from "./GrassyBackground.js";
 import Dealer from "./Dealer.js";
 import Players from "./Players.js";
@@ -8,7 +8,7 @@ import { useSocket } from "../../SocketContext.js";
 import SyncRoom from "../SyncRoom.js";
 import Chat from "./Chat.js";
 import You from "./You.js";
-import { getAvailablePlays } from "../../utils.js";
+import { getAvailablePlays, DIRECTIONS } from "../../utils.js";
 
 const Room = () => {
   const socket = useSocket();
@@ -29,25 +29,7 @@ const Room = () => {
   const [plays, setPlays] = useState([]);
   const [selectedPlayIndex, setSelectedPlayIndex] = useState(0);
 
-  const onLoad = () => {
-    document.querySelector(".grassy-room").focus();
-  };
-
-  const handleMessages = () => {
-    const messageEvent = (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    };
-    const messagesEvent = (messages) => {
-      setMessages(messages);
-    };
-    socket.on("message-received", messageEvent);
-    socket.on("messages-received", messagesEvent);
-    return () => {
-      socket.off("message-received", messageEvent);
-    };
-  };
-
-  const handlePlayers = () => {
+  const handlePlayers = useCallback(() => {
     const playersEvent = (newPlayers) => {
       setPlayers(newPlayers);
     };
@@ -76,9 +58,9 @@ const Room = () => {
     return () => {
       socket.off("player-received", playerEvent);
     };
-  };
+  }, [socket, setPlayers, setInGame]);
 
-  const handleDealer = () => {
+  const handleDealer = useCallback(() => {
     const dealerEvent = (newDealer) => {
       setDealer(() => newDealer);
     };
@@ -88,52 +70,82 @@ const Room = () => {
     return () => {
       socket.off("dealer-received", dealerEvent);
     };
-  };
+  }, [socket, setDealer]);
 
-  const placeMove = (move_key) => {
-    const DIRECTIONS = {
-      ArrowUp: "up",
-      ArrowDown: "down",
-      ArrowLeft: "left",
-      ArrowRight: "right",
-    };
-
-    socket.emit("move", DIRECTIONS[move_key]);
-  };
-
-  const placeBet = (bet = 25) => {
+  const placeBet = useCallback((bet = 25) => {
     socket.emit("place-bet", bet);
-  };
+  }, [socket]);
 
-  const executePlay = (play) => {
+  const executePlay = useCallback((play) => {
+    if(play === undefined) return
     let [indexlessPlay, index] = play.split("-");
-    index = parseInt(index, 10);
+      index = parseInt(index, 10);
 
     if (indexlessPlay === "stay") {
-      socket.emit("stay");
+        socket.emit("stay");
     } else if (indexlessPlay === "hit") {
-      socket.emit("hit", index);
+        socket.emit("hit", index);
     } else if (indexlessPlay === "split") {
-      socket.emit("split", index);
+        socket.emit("split", index);
     } else if (play.includes("double-down")) {
-      socket.emit("double-down");
+        socket.emit("double-down");
     }
-  };
+  }, [socket]);
 
-  const handleKeyPress = (event) => {
+  const onLoad = useCallback(() => {
+    document.querySelector(".grassy-room").focus();
+  }, []);
+  
+  const handleMessages = useCallback(() => {
+    const messageEvent = (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    };
+    
+    const messagesEvent = (messages) => {
+      setMessages(messages);
+    };
+    
+    socket.on("message-received", messageEvent);
+    socket.on("messages-received", messagesEvent);
+    
+    return () => {
+      socket.off("message-received", messageEvent);
+    };
+  }, [setMessages, socket]);
+  
+
+  
+  
+  const closeChat = useCallback(() => {
+    setChatOpen(false);
+    document.querySelector(".grassy-room").focus();
+  }, [setChatOpen]);
+  
+  const openChat = useCallback(() => {
+    setChatOpen(true);
+    
+    setTimeout(() => {
+      document.querySelector(".transparent-input").focus();
+    }, 100);
+  }, [setChatOpen]);
+  
+  const handleYou = useCallback(() => {
+    if (players[id]) {
+      setYou(players[id]);
+      const availablePlays = getAvailablePlays(players[id]);
+      setPlays(availablePlays);
+    }
+  }, [setYou, id, players, setPlays]);
+
+  const handleKeyDown = (event) => {
     if (chatOpen || !you) return;
-
+    
     const { key } = event;
-    const moveKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
-    const shouldPreventDefault =
-      moveKeys.includes(key) || (key === " " && !inGame);
-    if (shouldPreventDefault) event.preventDefault();
-
     if (key === "Enter") {
       openChat();
       return;
     }
-
+  
     if (you.status === "playing") {
       if (key === "ArrowUp")
         setSelectedPlayIndex(
@@ -141,41 +153,36 @@ const Room = () => {
         );
       else if (key === "ArrowDown")
         setSelectedPlayIndex((prevIndex) => (prevIndex + 1) % plays.length);
-      else if (key === " ") executePlay(plays[selectedPlayIndex]);
+      else if (key === " ")
+        executePlay(plays[selectedPlayIndex]);
     } else {
-      if (moveKeys.some((moveKey) => moveKey === key)) placeMove(key);
-      else if (key === " " && !inGame) placeBet(25);
+      if (key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight") {
+        event.preventDefault();
+        socket.emit("keydown", DIRECTIONS[key]);
+      } else if (key === " " && !inGame) {
+        placeBet(25);
+      }
+    }
+  };
+  
+  const handleKeyUp = (event) => {
+    if (chatOpen || !you) return;
+  
+    const { key } = event;
+  
+    if (key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight") {
+      socket.emit("keyup");
     }
   };
 
-  const closeChat = () => {
-    setChatOpen(false);
-    document.querySelector(".grassy-room").focus();
-  };
-
-  const openChat = () => {
-    setChatOpen(true);
-    setTimeout(() => {
-      document.querySelector(".transparent-input").focus();
-    }, 100);
-  };
-
-  const handleYou = () => {
-    if (players[id]) {
-      setYou(players[id]);
-      const availablePlays = getAvailablePlays(players[id]);
-      setPlays(availablePlays);
-    }
-  };
-
-  useEffect(handleYou, [you, players, id]);
-  useEffect(handleDealer, [dealer, socket]);
-  useEffect(handleMessages, [socket]);
-  useEffect(handlePlayers, [players, socket]);
-  useEffect(onLoad, []);
+  useEffect(handleYou, [you, players, id, handleYou]);
+  useEffect(handleDealer, [dealer, socket, handleDealer]);
+  useEffect(handleMessages, [socket, handleMessages]);
+  useEffect(handlePlayers, [players, socket, handlePlayers]);
+  useEffect(onLoad, [onLoad]);
 
   return (
-    <div className="grassy-room" onKeyDown={handleKeyPress} tabIndex={-1}>
+    <div className="grassy-room" onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={-1}>
       <Players players={Object.values(players)} messages={messages} you={id} />
       <GrassyBackground />
       <SyncRoom />

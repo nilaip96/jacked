@@ -11,6 +11,9 @@ const Player = (id, name) => ({
   hands: [[]],
   bets: [],
   position: { x: 10, y: 10 },
+  moving: false,
+  direction: null,
+  moveTimeoutId: null,
 });
 
 const createPlayer = (id, name) => {
@@ -31,6 +34,9 @@ const resetPlayer = (id) => {
   player.hands = [[]];
   player.bets = [];
   player.position = { x: 10, y: 10 };
+  player.moving = false;
+  player.direction = null;
+  player.moveTimeoutId = null;
   return player;
 };
 
