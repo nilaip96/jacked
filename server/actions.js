@@ -467,13 +467,36 @@ const doubleDown = (socket, io) => {
   checkGameOver(socket, io, room.name);
 };
 
-const move = (socket, io, direction) => {
+const startMove = (socket, io, direction) => {
+  const player = findPlayer(socket.id);
+  player.moving = true;
+  player.direction = direction;
+  // Start movement after a delay based on direction
+  player.moveTimeoutId = setTimeout(() => move(socket, io), 100);
+
+};
+
+const stopMove = (socket, io) => {
   const player = findPlayer(socket.id);
   const room = findRoom(player.room);
 
+  player.moving = false;
+  player.direction = null;
+  // Clear any ongoing movement timeout
+  clearTimeout(player.moveTimeoutId);
+  player.moveTimeoutId = null;
+  io.in(room.name).emit("player-received", player);
+
+};
+
+const move = (socket, io) => {
+  const player = findPlayer(socket.id);
+  if (!player.moving) return;
+
+  const room = findRoom(player.room);
   const { x, y } = player.position;
 
-  switch (direction) {
+  switch (player.direction) {
     case "right":
       player.position = { x: Math.min(100, x + 1), y };
       break;
@@ -489,7 +512,10 @@ const move = (socket, io, direction) => {
     default:
   }
 
-  io.in(room.name).emit("player-received", player);
+  // Update clients of the updated player position
+  io.in(room.name).emit("player-position", player);
+  // Call move again after a delay
+
 };
 
 module.exports = {
@@ -501,6 +527,7 @@ module.exports = {
   stay,
   split,
   doubleDown,
-  move,
   syncRoom,
+  stopMove,
+  startMove
 };

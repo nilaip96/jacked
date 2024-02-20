@@ -10,6 +10,8 @@ const {
   split,
   move,
   syncRoom,
+  stopMove,
+  startMove,
 } = require("./actions.js");
 const { log } = console;
 
@@ -65,8 +67,15 @@ module.exports.socket = (server) => {
       doubleDown(socket, io);
     });
 
-    socket.on("move", (direction) => {
-      move(socket, io, direction);
-    });
+    socket.on('keydown', direction => {
+
+      startMove(socket, io, direction)
+    }
+    );
+  socket.on('keyup', () =>{
+
+    stopMove(socket, io)
+  } 
+  );
   });
 };
