@@ -3,7 +3,7 @@ import socketIOClient from "socket.io-client";
 
 const SocketContext = createContext();
 
-const endPoint = "http://localhost:3000";
+const endPoint = "https://jacked-1.onrender.com";
 
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
