@@ -1,10 +1,14 @@
 import React from "react";
 import "./Card.css";
+import diamond from "../../assets/images/diamond.png";
+import heart from "../../assets/images/heart.png";
+import club from "../../assets/images/club.png";
+import spade from "../../assets/images/spade.png";
 
 const Suite = ({ suit }) => {
   switch (suit) {
     case "hearts":
-      return <div className="cardSuit heart">&hearts;</div>;
+      return <img src={heart} alt="heart" />;
     case "diamonds":
       return <div className="cardSuit diamond">&diams;</div>;
     case "clubs":

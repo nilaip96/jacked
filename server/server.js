@@ -12,11 +12,15 @@ app.use(cors());
 
 socket(server);
 
+app.get("/health", (_req, res)=> {
+  res.send(200)
+})
+
 app.get("*", (_req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
 });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);

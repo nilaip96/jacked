@@ -151,7 +151,8 @@ export const bestScore = (hand) => {
 };
 export const isBust = (hand) => minValue(hand) > 21;
 
-export const isSplit = (hand) => hand.length === 2 && WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0]
+export const isSplit = (hand) =>
+  hand.length === 2 && WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0];
 
 export const getZIndex = (y) => y - 1000;
 
@@ -165,7 +166,7 @@ export const getAvailablePlays = ({ hands }) => {
     // Add "hit" and "stay" for every hand thats not 21
     if (bestScore(hand) <= 21) newPlays.push(`hit-${index}`);
 
-    if ( isSplit(hand) ) newPlays.push(`split-${index}`);
+    if (isSplit(hand)) newPlays.push(`split-${index}`);
   });
 
   return newPlays;

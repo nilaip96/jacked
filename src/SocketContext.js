@@ -3,7 +3,7 @@ import socketIOClient from "socket.io-client";
 
 const SocketContext = createContext();
 
-const endPoint = "http://localhost:3001";
+const endPoint = "http://localhost:3000";
 
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);

@@ -1,6 +1,7 @@
 import React from "react";
 import "./Player.css";
 import Card from "./Card.js";
+import Body from "./Body.js";
 
 const Player = ({ player }) => {
   const { name, status, wallet = 0, hands = [], bets = [] } = player;
@@ -20,6 +21,7 @@ const Player = ({ player }) => {
       ))}
       {status === "bust" && <div>BUST</div>}
       {status === "stay" && <div>Stopped</div>}
+      <Body />
     </div>
   );
 };

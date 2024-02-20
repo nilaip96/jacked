@@ -4,6 +4,7 @@ import Card from "./Card.js";
 import BetPlacer from "./BetPlacer.js";
 import Plays from "./Plays.js";
 import { bestScore } from "../../utils.js";
+import Body from "./Body.js";
 
 const You = ({ player, inGame }) => {
   const { name, status, wallet = 0, hands = [], bets = [] } = player;
@@ -27,6 +28,7 @@ const You = ({ player, inGame }) => {
       {status === "playing" && <Plays player={player} />}
       {status === "bust" && <div>BUST</div>}
       {status === "stay" && <div>Stopped</div>}
+      <Body />
     </div>
   );
 };
