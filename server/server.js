@@ -12,9 +12,9 @@ app.use(cors());
 
 socket(server);
 
-app.get("/health", (_req, res)=> {
-  res.send(200)
-})
+app.get("/health", (_req, res) => {
+  res.send(200);
+});
 
 app.get("*", (_req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));

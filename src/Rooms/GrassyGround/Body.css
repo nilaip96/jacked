@@ -4,99 +4,98 @@
   background-color: red;
 }
 
-
-.Body{
+.Body {
   height: 100px;
-  width:100px;
+  width: 100px;
   background-color: blue;
 }
-.Top{
+.Top {
   height: 100px;
-  width:100px;
+  width: 100px;
   background-color: blue;
 }
-  .Head{
-    height: 100px;
-    width:100px;
-    background-color: blue;
-  }
-.Mid{
+.Head {
   height: 100px;
-  width:100px;
+  width: 100px;
   background-color: blue;
 }
-  .Arm{
-    height: 100px;
-    width:100px;
-    background-color: blue;
-  }
-    .Sleeve{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-    .Hand{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-  .Torso{
-    height: 100px;
-    width:100px;
-    background-color: blue;
-  }
-    .Collar{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-  .Arm{
-    height: 100px;
-    width:100px;
-    background-color: blue;
-  }
-    .Sleeve{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-    .Hand{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-.Bot{
+.Mid {
   height: 100px;
-  width:100px;
+  width: 100px;
   background-color: blue;
 }
-  .Leg{
-    height: 100px;
-    width:100px;
-    background-color: blue;
-  }
-    .Pant{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-    .Shoe{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-  .Leg{
-    height: 100px;
-    width:100px;
-    background-color: blue;
-  }
-    .Pant{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
-    .Shoe{
-      height: 100px;
-      width:100px;
-      background-color: blue;
-    }
+.Arm {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Sleeve {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Hand {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Torso {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Collar {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Arm {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Sleeve {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Hand {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Bot {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Leg {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Pant {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Shoe {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Leg {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Pant {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+.Shoe {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}

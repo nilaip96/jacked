@@ -67,15 +67,11 @@ module.exports.socket = (server) => {
       doubleDown(socket, io);
     });
 
-    socket.on('keydown', direction => {
-
-      startMove(socket, io, direction)
-    }
-    );
-  socket.on('keyup', () =>{
-
-    stopMove(socket, io)
-  } 
-  );
+    socket.on("keydown", (direction) => {
+      startMove(socket, io, direction);
+    });
+    socket.on("keyup", () => {
+      stopMove(socket, io);
+    });
   });
 };
