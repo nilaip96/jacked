@@ -10,7 +10,7 @@ module.exports.admin = () => {
       (acc, { name }) => `${acc}<li>${name}</li>`,
       ""
     )}
-  <ul>
+  </ul>
   `,
     ""
   );

@@ -467,11 +467,12 @@ const doubleDown = (socket, io) => {
   checkGameOver(socket, io, room.name);
 };
 
-const deleteAll = (socket, io) => {
+const deleteAll = (_socket, io) => {
   Object.values(Rooms).forEach((room) => {
     const { Players } = room;
     Object.values(Players).forEach((player) => {
-      leaveRoom(socket, io);
+      const socket = io.sockets.sockets.get(player.id);
+      leaveRoom(socket, io)
       io.to(player.id).emit("room-received", "");
     });
     room.Players = {}
