@@ -172,26 +172,27 @@ export const getAvailablePlays = ({ hands }) => {
   return newPlays;
 };
 
-
 export const suggest = (hand, upCard) => {
-  const upCardIndex = WEIGHT[upCard][0] - 2
-  const [card1, card2] = hand.map(card => card.value);
+  const upCardIndex = WEIGHT[upCard][0] - 2;
+  const [card1, card2] = hand.map((card) => card.value);
 
   if (card1 === card2) {
     // Pair case
     const pairKey = `${card1}-${card2}`;
     return CHEAT_SHEET[pairKey][upCardIndex];
   }
-  if (card1 === 'ace' || card2 === 'ace') {
+  if (card1 === "ace" || card2 === "ace") {
     // Soft hand case
-    const softKey = card1 === 'ace' ? `A-${card2}` : `A-${card1}`;
+    const softKey = card1 === "ace" ? `A-${card2}` : `A-${card1}`;
     return CHEAT_SHEET[softKey][upCardIndex];
-  }  
+  }
   // Hard hand case
   const total = WEIGHT[card1][0] + WEIGHT[card2][0];
   if (total >= 17) {
     return ["S", "S", "S", "S", "S", "S", "S", "S", "S", "S"][upCardIndex];
-  } 
-  
-  return CHEAT_SHEET[total][upCardIndex] !== undefined ? CHEAT_SHEET[total][upCardIndex] : null;
-}
+  }
+
+  return CHEAT_SHEET[total][upCardIndex] !== undefined
+    ? CHEAT_SHEET[total][upCardIndex]
+    : null;
+};
