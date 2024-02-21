@@ -472,13 +472,12 @@ const deleteAll = (_socket, io) => {
     const { Players } = room;
     Object.values(Players).forEach((player) => {
       const socket = io.sockets.sockets.get(player.id);
-      leaveRoom(socket, io)
+      leaveRoom(socket, io);
       io.to(player.id).emit("room-received", "");
     });
-    room.Players = {}
-    deleteRoom(room.name)
+    room.Players = {};
+    deleteRoom(room.name);
   });
-
 };
 
 module.exports = {

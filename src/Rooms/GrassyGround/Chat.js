@@ -50,6 +50,7 @@ const Chat = () => {
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        maxLength="150"
         onKeyPress={handleKeyPress}
       />
       <button style={{ width: "60px" }} onClick={sendMessage}>

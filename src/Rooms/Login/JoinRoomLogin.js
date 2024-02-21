@@ -79,6 +79,7 @@ const JoinRoom = ({ name }) => {
           placeholder="Enter Room ID"
           onChange={handleInputChange}
           animate={typingControls}
+          maxLength="12"
         />
       </motion.div>
       <motion.div

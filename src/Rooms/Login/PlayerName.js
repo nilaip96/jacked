@@ -30,6 +30,7 @@ const PlayerName = ({ name, setName }) => {
         placeholder="Username"
         className="login-input"
         animate={typingControls}
+        maxLength="12"
       />
     </motion.div>
   );
