@@ -1,4 +1,4 @@
-const { WEIGHT, SUITS, OUTCOMES } = require("./constants.js");
+const { WEIGHT, SUITS, OUTCOMES, CHEAT_SHEET } = require("./constants.js");
 const { Card } = require("./models/card.js");
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -102,6 +102,31 @@ const determineWinner = (outcomes) => {
     : OUTCOMES.Dealer;
 };
 
+const suggest = (hand, upCard) => {
+  const upCardIndex = WEIGHT[upCard] - 2;
+  const [card1, card2] = hand.map((card) => card.value);
+
+  if (card1 === card2) {
+    // Pair case
+    const pairKey = `${card1}-${card2}`;
+    return CHEAT_SHEET[pairKey][upCardIndex];
+  }
+  if (card1 === "ace" || card2 === "ace") {
+    // Soft hand case
+    const softKey = card1 === "ace" ? `A-${card2}` : `A-${card1}`;
+    return CHEAT_SHEET[softKey][upCardIndex];
+  }
+  // Hard hand case
+  const total = WEIGHT[card1][0] + WEIGHT[card2][0];
+  if (total >= 17) {
+    return "S";
+  }
+
+  return CHEAT_SHEET[total][upCardIndex] !== undefined
+    ? CHEAT_SHEET[total][upCardIndex]
+    : "";
+};
+
 module.exports = {
   compareHands,
   isBust,
@@ -113,4 +138,5 @@ module.exports = {
   determineWinner,
   analyzeOutComes,
   delay,
+  suggest,
 };

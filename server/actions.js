@@ -16,6 +16,7 @@ const {
   bestScore,
   determineWinner,
   delay,
+  suggest,
 } = require("./utils.js");
 
 const joinRoom = (socket, _io, roomName, playerName) => {
@@ -81,7 +82,9 @@ const leaveRoom = (socket, io) => {
   if (!Players.length) {
     deleteRoom(name);
     log("Deleted room", name);
-  } else if (
+    return;
+  }
+  if (
     inGame &&
     Players.every(({ status }) => status === PLAYER_STATUS.spectator)
   ) {
@@ -96,7 +99,9 @@ const leaveRoom = (socket, io) => {
     io.in(name).emit("message-received", resetMessage);
     io.in(name).emit("dealer-received", room.Dealer);
     io.in(name).emit("game-status", room.inGame);
-  } else if (inGame) {
+    return;
+  }
+  if (inGame) {
     checkGameOver(socket, io, room.name);
   }
 };
@@ -153,6 +158,7 @@ const enablePlayers = (_socket, io, roomName) => {
       player.bets[0] = 0;
     } else {
       player.status = PLAYER_STATUS.playing;
+      player.suggestion = suggest(hand, room.Dealer.hand[0].value);
     }
     io.in(room.name).emit("dealer-received", room.Dealer);
     io.in(room.name).emit("player-received", player);
@@ -400,6 +406,7 @@ const hit = (socket, io, handIndex) => {
       player.status = PLAYER_STATUS.bust;
     }
   }
+  player.suggestion = "";
 
   io.in(room.name).emit("dealer-received", room.Dealer);
   io.in(room.name).emit("player-received", player);
@@ -411,6 +418,7 @@ const stay = (socket, io) => {
   const room = findRoom(player.room);
 
   player.status = PLAYER_STATUS.stay;
+  player.suggestion = "";
 
   io.in(room.name).emit("player-received", player);
   checkGameOver(socket, io, room.name);
@@ -426,6 +434,7 @@ const split = async (socket, io, handIndexToSplit) => {
   player.hands.push([handToSplit.pop()]);
   player.wallet -= bet;
   player.bets.push(0 + bet);
+  player.suggestion = "";
 
   handToSplit.push(room.Dealer.deck.pop());
   io.in(room.name).emit("player-received", player);
@@ -452,6 +461,7 @@ const doubleDown = (socket, io) => {
   player.hands[0].push(card);
   player.wallet -= player.bets[0];
   player.bets[0] *= 2;
+  player.suggestion = "";
   io.in(room.name).emit("player-received", player);
 
   if (isBust(player.hands[0])) {

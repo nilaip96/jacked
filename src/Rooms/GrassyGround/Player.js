@@ -4,13 +4,21 @@ import Card from "./Card.js";
 import Body from "./Body.js";
 
 const Player = ({ player }) => {
-  const { name, status, wallet = 0, hands = [], bets = [] } = player;
+  const {
+    name,
+    status,
+    wallet = 0,
+    hands = [],
+    bets = [],
+    suggestion = "",
+  } = player;
 
   return (
     <div className="grid-item">
       <div>{name}</div>
       <div>{wallet}</div>
       <div>{status}</div>
+      <div>{suggestion}</div>
       <div>{bets.reduce((sum, bet) => sum + bet, 0)}</div>
       {hands.map((hand, handIndex) => (
         <div key={`hand-${handIndex}`}>

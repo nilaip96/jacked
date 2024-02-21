@@ -10,6 +10,7 @@ const Player = (id, name) => ({
   wallet: 1000,
   hands: [[]],
   bets: [],
+  suggestion: "",
 });
 
 const createPlayer = (id, name) => {
@@ -30,6 +31,7 @@ const resetPlayer = (id) => {
   player.hands = [[]];
   player.bets = [];
   player.position = { x: 10, y: 10 };
+  player.suggestion = "";
   return player;
 };
 
