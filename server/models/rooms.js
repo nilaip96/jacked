@@ -26,4 +26,4 @@ const deleteRoom = (name) => {
   }
 };
 
-module.exports = { findRoom, deleteRoom };
+module.exports = { findRoom, deleteRoom, Rooms };

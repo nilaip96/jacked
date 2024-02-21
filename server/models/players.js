@@ -10,7 +10,6 @@ const Player = (id, name) => ({
   wallet: 1000,
   hands: [[]],
   bets: [],
-  position: { x: 10, y: 10 },
 });
 
 const createPlayer = (id, name) => {
@@ -34,4 +33,4 @@ const resetPlayer = (id) => {
   return player;
 };
 
-module.exports = { findPlayer, resetPlayer };
+module.exports = { findPlayer, resetPlayer, Players };

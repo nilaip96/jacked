@@ -3,7 +3,10 @@ import socketIOClient from "socket.io-client";
 
 const SocketContext = createContext();
 
-const endPoint = "https://jacked-1.onrender.com";
+const endPoint =
+  process.env.NODE_ENV === "production"
+    ? "https://jacked-1.onrender.com"
+    : "localhost:3000";
 
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);

@@ -1,4 +1,4 @@
-const { findRoom, deleteRoom } = require("./models/rooms.js");
+const { findRoom, deleteRoom, Rooms } = require("./models/rooms.js");
 const { findPlayer } = require("./models/players.js");
 const { createMessage } = require("./models/messages.js");
 const { resetDealer } = require("./models/dealers.js");
@@ -467,29 +467,14 @@ const doubleDown = (socket, io) => {
   checkGameOver(socket, io, room.name);
 };
 
-const move = (socket, io, direction) => {
-  const player = findPlayer(socket.id);
-  const room = findRoom(player.room);
-
-  const { x, y } = player.position;
-
-  switch (direction) {
-    case "right":
-      player.position = { x: Math.min(100, x + 1), y };
-      break;
-    case "left":
-      player.position = { x: Math.max(0, x - 1), y };
-      break;
-    case "up":
-      player.position = { y: Math.max(0, y - 1), x };
-      break;
-    case "down":
-      player.position = { y: Math.min(100, y + 1), x };
-      break;
-    default:
-  }
-
-  io.in(room.name).emit("player-received", player);
+const deleteAll = (socket, io) => {
+  Object.values(Rooms).forEach((room) => {
+    const { Players } = room;
+    Object.values(Players).forEach((player) => {
+      leaveRoom(socket, io);
+      io.to(player.id).emit("room-received", "");
+    });
+  });
 };
 
 module.exports = {
@@ -501,6 +486,6 @@ module.exports = {
   stay,
   split,
   doubleDown,
-  move,
   syncRoom,
+  deleteAll,
 };
