@@ -20,7 +20,7 @@ const JoinRoom = ({ name }) => {
         placeholder="Enter Room ID"
         onChange={({ target }) => setRoom(target.value)}
       />
-      <div style={{ height: "64px", width: "256px" }}>
+      <div>
         {room.length !== 0 && <button onClick={joinRoom}>Join Room</button>}
       </div>
     </div>

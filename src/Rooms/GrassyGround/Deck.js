@@ -10,9 +10,9 @@ const Deck = ({ deck }) => {
   return (
     <div className="deck">
       <img className="suit" src={heart} alt="heart" />
-      <img className="suit" src={diamond} alt="diamond"/>
-      <img className="suit" src={club} alt="club"/>
-      <img className="suit" src={spade} alt="spade"/>
+      <img className="suit" src={diamond} alt="diamond" />
+      <img className="suit" src={club} alt="club" />
+      <img className="suit" src={spade} alt="spade" />
     </div>
   );
 };

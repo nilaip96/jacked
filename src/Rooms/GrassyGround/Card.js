@@ -10,11 +10,11 @@ const Suite = ({ suit }) => {
     case "hearts":
       return <img src={heart} alt="heart" />;
     case "diamonds":
-      return <img src={diamond} alt="diamond"/>;
+      return <img src={diamond} alt="diamond" />;
     case "clubs":
-      return <img src={club} alt="club"/>;
+      return <img src={club} alt="club" />;
     case "spades":
-      return <img src={spade} alt="spade"/>;
+      return <img src={spade} alt="spade" />;
     default:
       return;
   }
