@@ -474,7 +474,10 @@ const deleteAll = (socket, io) => {
       leaveRoom(socket, io);
       io.to(player.id).emit("room-received", "");
     });
+    room.Players = {}
+    deleteRoom(room.name)
   });
+
 };
 
 module.exports = {
