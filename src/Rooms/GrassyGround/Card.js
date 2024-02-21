@@ -10,11 +10,11 @@ const Suite = ({ suit }) => {
     case "hearts":
       return <img src={heart} alt="heart" />;
     case "diamonds":
-      return <div className="cardSuit diamond">&diams;</div>;
+      return <img src={diamond} alt="diamond"/>;
     case "clubs":
-      return <div className="cardSuit club">&clubs;</div>;
+      return <img src={club} alt="club"/>;
     case "spades":
-      return <div className="cardSuit spade">&spades;</div>;
+      return <img src={spade} alt="spade"/>;
     default:
       return;
   }
@@ -22,8 +22,8 @@ const Suite = ({ suit }) => {
 
 const Card = ({ card }) => (
   <div className="card">
-    <div className="cardValue">{card.value}</div>
-    <Suite suit={card.suit} />
+    <div className="value">{card.value}</div>
+    <Suite className="suit" suit={card.suit} />
   </div>
 );
 
