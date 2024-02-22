@@ -10,7 +10,6 @@ const endPoint =
 
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
-
   useEffect(() => {
     const newSocket = socketIOClient(endPoint);
     setSocket(newSocket);
