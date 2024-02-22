@@ -103,30 +103,33 @@ const determineWinner = (outcomes) => {
 };
 
 const suggest = (hand, upCard) => {
-  const upCardIndex = WEIGHT[upCard] - 2;
-  const [card1, card2] = hand.map((card) => card.value);
+  try {
+    const upCardIndex = WEIGHT[upCard][0] - 2;
+    const [card1, card2] = hand.map((card) => card.value);
+    if (card1 === card2) {
+      // Pair case
+      let pairKey = `${WEIGHT[card1][0]}-${WEIGHT[card2][0]}`;
+      if (card1 === "ace") pairKey = `A-A`;
+      return CHEAT_SHEET[pairKey][upCardIndex];
+    }
+    if (card1 === "ace" || card2 === "ace") {
+      // Soft hand case
+      const softKey =
+        card1 === "ace" ? `A-${WEIGHT[card2][0]}` : `A-${WEIGHT[card1][0]}`;
+      return CHEAT_SHEET[softKey][upCardIndex];
+    }
+    // Hard hand case
+    const total = WEIGHT[card1][0] + WEIGHT[card2][0];
+    if (total >= 17) {
+      return "S";
+    }
 
-  if (card1 === card2) {
-    // Pair case
-    let pairKey = `${card1}-${card2}`;
-    if (card1 === "ace") pairKey = `A-A`;
-    return CHEAT_SHEET[pairKey][upCardIndex];
+    return CHEAT_SHEET[total][upCardIndex] !== undefined
+      ? CHEAT_SHEET[total][upCardIndex]
+      : "";
+  } catch (e) {
+    return "";
   }
-  if (card1 === "ace" || card2 === "ace") {
-    // Soft hand case
-    const softKey =
-      card1 === "ace" ? `A-${WEIGHT[card2][0]}` : `A-${WEIGHT[card1][0]}`;
-    return CHEAT_SHEET[softKey][upCardIndex];
-  }
-  // Hard hand case
-  const total = WEIGHT[card1][0] + WEIGHT[card2][0];
-  if (total >= 17) {
-    return "S";
-  }
-
-  return CHEAT_SHEET[total][upCardIndex] !== undefined
-    ? CHEAT_SHEET[total][upCardIndex]
-    : "";
 };
 
 module.exports = {
