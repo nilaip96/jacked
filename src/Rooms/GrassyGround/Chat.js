@@ -29,7 +29,8 @@ const Chat = () => {
   useEffect(scrollToBottom, [messages]);
 
   const sendMessage = () => {
-    socket.emit("send-message", inputValue);
+    if (!inputValue.trim().length) return;
+    socket.emit("send-message", inputValue.trim());
     setInputValue("");
   };
 
@@ -41,20 +42,25 @@ const Chat = () => {
     <div className="chat-container">
       <div className="chat-messages">
         {messages.map(({ text, source, time, playerName }, i) => (
-          <div key={i}>{`${time} || ${playerName || source} || ${text}`}</div>
+          <>
+            <div>{`${time} || ${playerName || source}`}</div>
+            <div key={i} className={"message"}>
+              {text}
+            </div>
+          </>
         ))}
         <div ref={messagesEndRef}></div>
       </div>
-      <input
+      <textarea
         className="chat-input"
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        maxLength="150"
+        maxLength="450"
         onKeyPress={handleKeyPress}
       />
-      <button style={{ width: "60px" }} onClick={sendMessage}>
-        Send
+      <button className="send-button" onClick={sendMessage}>
+        &#9650;
       </button>
     </div>
   );

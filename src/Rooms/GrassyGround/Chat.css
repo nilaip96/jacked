@@ -1,32 +1,124 @@
 .chat-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: --ash-black;
   font-family: RuneScape;
-  width: 90%;
+  width: 100%;
   height: 200px;
-  box-sizing: border-box;
-  top: 75%;
-  left: 5%;
+  background-color: var(--ash-black);
+  @media (min-width: 900px) {
+    flex: 1;
+    position: fixed;
+    width: 25vw;
+    height: 100vh;
+    border-radius: 12px 0px 0px 12px;
+  }
+
+  @media (max-width: 900px) {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 }
 
 .chat-messages {
-  flex: 1;
   overflow: auto;
-  border: 1px solid #ccc;
-  padding: 8px;
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 80%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: var(--white);
+  max-height: 90%;
+  height: 70%;
+  margin: 5%;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent; /* Color of the track */
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 25px;
+  border: none; /* Radius of the scrollbar thumb */
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: transparent; /* Color of the scrollbar thumb on hover */
 }
 
 .chat-input {
-  color: --ash-black;
+  color: var(--white);
   font-family: RuneScape;
-  width: 50%;
-  border: 1px solid #ccc;
-  background: transparent;
+  border: none;
+  background: var(--blue);
   outline: none;
   box-shadow: none;
+  height: 15%;
+  width: 75%;
+  padding: 20px;
+  border-radius: 12px;
+  line-height: 1; /* Set line height to 1 to start cursor at the top */
+  resize: none; /* Prevent resizing */
+  font-size: 20px; /* Increase font size */
+  font-weight: bold; /* Increase font weight */
+  margin: 5%;
+  overflow-y: hidden;
   &:focus {
     outline: none;
+  }
+}
+.send-button {
+  position: absolute;
+  bottom: 3%;
+  right: 10%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  width: 40px; /* Set width and height for the circle */
+  height: 40px;
+  background-color: var(--blue); /* Set background color */
+  border-radius: 50%; /* Make it a circle */
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  background-color: var(--purple);
+  color: var(--white);
+  word-wrap: break-word;
+  max-width: 90%;
+  padding: 5%;
+  margin: 10px 0px;
+  border-radius: 12px;
+}
+
+@media (max-width: 900px) {
+  .chat-messages {
+    margin: 10px;
+  }
+  .message {
+    margin: 10px 0px;
+    padding: 10px;
+  }
+  .chat-input {
+    font-size: 14px;
+    margin: 10px;
+    height: 30%;
+  }
+  .send-button {
+    right: 10%;
+    bottom: 10%;
   }
 }

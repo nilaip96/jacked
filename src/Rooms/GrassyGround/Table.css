@@ -1,0 +1,7 @@
+.table-container {
+  overflow-y: auto;
+
+  @media (min-width: 900px) {
+    flex: 3;
+  }
+}

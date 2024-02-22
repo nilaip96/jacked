@@ -9,7 +9,7 @@ const Table = () => {
   //dealer event
 
   return (
-    <div>
+    <div className="table-container">
       <Dealer />
       <Players />
     </div>

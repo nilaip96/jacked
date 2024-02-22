@@ -108,12 +108,14 @@ const suggest = (hand, upCard) => {
 
   if (card1 === card2) {
     // Pair case
-    const pairKey = `${card1}-${card2}`;
+    let pairKey = `${card1}-${card2}`;
+    if (card1 === "ace") pairKey = `A-A`;
     return CHEAT_SHEET[pairKey][upCardIndex];
   }
   if (card1 === "ace" || card2 === "ace") {
     // Soft hand case
-    const softKey = card1 === "ace" ? `A-${card2}` : `A-${card1}`;
+    const softKey =
+      card1 === "ace" ? `A-${WEIGHT[card2][0]}` : `A-${WEIGHT[card1][0]}`;
     return CHEAT_SHEET[softKey][upCardIndex];
   }
   // Hard hand case

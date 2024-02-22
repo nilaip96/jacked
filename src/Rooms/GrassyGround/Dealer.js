@@ -14,7 +14,6 @@ const Dealer = () => {
     tossed: [],
     hidden: false,
     wallet: 0,
-    position: { x: 50, y: 10 },
   });
 
   useEffect(() => {
@@ -31,7 +30,13 @@ const Dealer = () => {
 
   const { hand, deck, tossed, hidden, wallet } = dealer;
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+      }}
+    >
       <div>Dealer</div>
       <div>{wallet}</div>
       <div>
