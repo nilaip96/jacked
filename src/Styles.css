@@ -29,3 +29,7 @@ body {
   --grassy-room: var(--green);
   --accent: var(--white);
 }
+
+div {
+  color: var(--white)
+}
