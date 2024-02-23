@@ -30,7 +30,6 @@ const You = ({ player }) => {
           <div>{bestScore(hand)}</div>
         </div>
       ))}
-      <Interface />
       {status === "bust" && <div>BUST</div>}
       {status === "stay" && <div>Stopped</div>}
     </div>
