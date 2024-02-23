@@ -4,7 +4,7 @@ import Card from "./Card.js";
 import Interface from "./Interface.js";
 import { bestScore } from "../../utils.js";
 
-const You = ({ player, inGame }) => {
+const You = ({ player }) => {
   const {
     name,
     status,
