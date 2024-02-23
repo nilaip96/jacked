@@ -4,7 +4,7 @@ import { useSocket } from "../../SocketContext.js";
 import Card from "./Card.js";
 import Deck from "./Deck.js";
 import { bestScore } from "../../utils.js";
-import './Dealer.css'
+import "./Dealer.css";
 const Dealer = () => {
   const socket = useSocket();
 
@@ -30,9 +30,7 @@ const Dealer = () => {
 
   const { hand, deck, tossed, hidden, wallet } = dealer;
   return (
-    <div
-      className="Dealer"
-    >
+    <div className="Dealer">
       <div>Dealer</div>
       <div>{wallet}</div>
       <div>
