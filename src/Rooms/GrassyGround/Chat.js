@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSocket } from "../../SocketContext.js";
 import "./Chat.css";
-
+import Interface from "./Interface.js";
 const Chat = () => {
   const socket = useSocket();
   const [messages, setMessages] = useState([]);
@@ -40,6 +40,7 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
+      <Interface />
       <div className="chat-messages">
         {messages.map(({ text, source, time, playerName }, i) => (
           <>

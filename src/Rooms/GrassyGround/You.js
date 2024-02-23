@@ -1,9 +1,9 @@
 import React from "react";
 import "./Player.css";
 import Card from "./Card.js";
-import BetPlacer from "./BetPlacer.js";
-import Plays from "./Plays.js";
+import Interface from "./Interface.js";
 import { bestScore } from "../../utils.js";
+import Interface from "./Interface.js";
 
 const You = ({ player, inGame }) => {
   const {
@@ -31,8 +31,7 @@ const You = ({ player, inGame }) => {
           <div>{bestScore(hand)}</div>
         </div>
       ))}
-      {!inGame && status === "spectator" && <BetPlacer />}
-      {status === "playing" && <Plays player={player} />}
+      <Interface />
       {status === "bust" && <div>BUST</div>}
       {status === "stay" && <div>Stopped</div>}
     </div>
