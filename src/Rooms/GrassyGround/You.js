@@ -3,7 +3,6 @@ import "./Player.css";
 import Card from "./Card.js";
 import Interface from "./Interface.js";
 import { bestScore } from "../../utils.js";
-import Interface from "./Interface.js";
 
 const You = ({ player, inGame }) => {
   const {
