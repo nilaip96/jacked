@@ -27,6 +27,7 @@
 
 .value {
   font-size: 18px;
+  color: var(--ash-black);
 }
 
 .suit {

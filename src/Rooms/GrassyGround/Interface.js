@@ -2,6 +2,8 @@ import React from "react";
 import usePlayers from "./usePlayers.js";
 import Plays from "./Plays.js";
 import BetPlacer from "./BetPlacer.js";
+import "./Interface.css";
+
 
 const Interface = () => {
   const { inGame, players, you } = usePlayers();
@@ -9,7 +11,7 @@ const Interface = () => {
   const status = player?.status || "";
 
   return (
-    <div>
+    <div className="Interface">
       Interface
       {!inGame && status === "spectator" && <BetPlacer />}
       {status === "playing" && <Plays player={player} />}

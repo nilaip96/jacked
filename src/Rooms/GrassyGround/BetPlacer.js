@@ -10,7 +10,7 @@ const BetPlacer = () => {
   };
 
   return (
-    <div>
+    <div className="BetPlacer">
       <button onClick={placeBet}>25</button>
     </div>
   );

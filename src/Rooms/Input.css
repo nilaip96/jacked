@@ -3,7 +3,6 @@
   border: 1px solid var(--dusk);
   background-color: var(--white);
   color: var(--ash-black);
-  font-family: Runescape;
   font-weight: 700;
   width: 20vw;
   border-radius: 20px;
@@ -34,7 +33,6 @@
   box-sizing: border-box;
   color: var(--sky);
   cursor: pointer;
-  font-family: Runescape;
   font-size: 14px;
   line-height: 1.15;
   overflow: visible;

@@ -10,6 +10,9 @@
   font-style: normal;
   font-display: swap;
 }
+div, button, input, textarea {
+  font-family: Runescape;
+}
 
 body {
   margin: 0;
@@ -30,6 +33,21 @@ body {
   --accent: var(--white);
 }
 
+
 div {
   color: var(--white);
+}
+
+button {
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    width: 40px; /* Set width and height for the circle */
+    height: 40px;
+    background-color: var(--blue); /* Set background color */
+    border-radius: 50%; /* Make it a circle */
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
