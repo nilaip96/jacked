@@ -477,7 +477,7 @@ const doubleDown = (socket, io) => {
   checkGameOver(socket, io, room.name);
 };
 
-const deleteAll = (socket, io) => {
+const deleteAll = (_socket, io) => {
   Object.values(Rooms).forEach((room) => {
     const { Players } = room;
     Object.values(Players).forEach((player) => {
