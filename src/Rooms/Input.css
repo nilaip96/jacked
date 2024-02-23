@@ -5,6 +5,7 @@
   color: var(--ash-black);
   font-weight: 700;
   width: 20vw;
+  min-width: 200px;
   border-radius: 20px;
   padding: 1.5vh 2vw;
 }
@@ -16,7 +17,7 @@
 }
 
 .login-input:hover {
-  border: 1px solidvar(--ash-black);
+  border: 1px solid var(--ash-black);
   box-shadow: 0 3px 6px var(--sky), 0 3px 6px var(--sky);
 }
 
