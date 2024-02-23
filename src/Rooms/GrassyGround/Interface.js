@@ -9,21 +9,14 @@ const Interface = () => {
   const player = players[you];
   const status = player?.status || "";
   const wallet = player?.wallet || 0;
-
-  if (
-    !(
-      status === "playing" ||
-      (!inGame && (status === "spectator" || status === "ready"))
-    )
-  )
-    return null
+  const playing = status === "playing";
+  const canBet = !inGame && (status === "spectator" || status === "ready");
+  if (!(playing || canBet)) return null;
   return (
-    <div className="Interface">
-      {!inGame && (status === "spectator" || status === "ready") && (
-        <BetPlacer wallet={wallet} />
-      )}
-      {status === "playing" && <Plays player={player} />}
-    </div>
+    <>
+      {canBet && <BetPlacer wallet={wallet} />}
+      {playing && <Plays player={player} />}
+    </>
   );
 };
 

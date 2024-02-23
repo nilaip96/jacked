@@ -4,7 +4,7 @@ import { isBust, bestScore } from "../../utils.js";
 import { WEIGHT } from "../../Constants.js";
 
 const Plays = ({ player }) => {
-  const { hands } = player;
+  const { hands, wallet, bets } = player;
 
   const socket = useSocket();
 
@@ -28,10 +28,10 @@ const Plays = ({ player }) => {
   };
 
   return (
-    <>
+    <div className="Interface">
       <button onClick={handleStay}>STAY</button>
       {hands.map((hand, handIndex) => (
-        <div key={`actions-${handIndex}`}>
+        <>
           {!isBust(hand) && bestScore(hand) !== 21 && (
             <button
               key={`hit-${handIndex}`}
@@ -40,16 +40,17 @@ const Plays = ({ player }) => {
               {`HIT ${handIndex + 1}`}
             </button>
           )}
-          {hand.length === 2 &&
+          {wallet >= bets[0] &&
+            hand.length === 2 &&
             WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0] && (
               <button onClick={(e) => handleSplit(e, handIndex)}>SPLIT</button>
             )}
-        </div>
+        </>
       ))}
-      {hands.length === 1 && hands[0].length === 2 && (
+      {wallet >= bets[0] && hands.length === 1 && hands[0].length === 2 && (
         <button onClick={handleDoubleDown}>DD</button>
       )}
-    </>
+    </div>
   );
 };
 

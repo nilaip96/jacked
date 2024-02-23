@@ -12,12 +12,12 @@ const BetPlacer = ({ wallet }) => {
   };
   if (wallet === 0) return null;
   return (
-    <>
+    <div className="Interface">
       {bets.map((amount) => {
         if (amount > wallet) return null;
         return <button onClick={() => placeBet(amount)}>{amount}</button>;
       })}
-    </>
+    </div>
   );
 };
 
