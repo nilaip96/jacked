@@ -5,8 +5,8 @@
   align-items: center;
   color: --ash-black;
   width: 100%;
-  height: 300px;
   background-color: var(--ash-black);
+  max-height: 40vh;
 
   position: fixed;
   bottom: 0;
@@ -16,6 +16,7 @@
     position: fixed;
     width: 25vw;
     height: 100vh;
+    max-height: 100vh;
     border-radius: 12px 0px 0px 12px;
   }
 }
@@ -33,6 +34,13 @@
   max-height: 90%;
   height: 70%;
   margin: 5%;
+  @media (max-width: 950px) {
+    max-height: 8vh;
+    margin: 4px;
+    margin-top: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -101,9 +109,6 @@
 }
 
 @media (max-width: 950px) {
-  .chat-messages {
-    margin: 10px;
-  }
   .message {
     margin: 10px 0px;
     padding: 10px;

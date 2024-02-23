@@ -11,7 +11,7 @@
   width: 160px;
   flex-wrap: wrap;
   @media (max-width: 950px) {
-    width: 50%;
+    width: 80%;
     max-width: 320px;
   }
 }
