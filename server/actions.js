@@ -1,5 +1,5 @@
 const { findRoom, deleteRoom, Rooms } = require("./models/rooms.js");
-const { findPlayer } = require("./models/players.js");
+const { findPlayer, resetPlayer, Players } = require("./models/players.js");
 const { createMessage } = require("./models/messages.js");
 const { resetDealer } = require("./models/dealers.js");
 const { log } = console;
@@ -477,7 +477,7 @@ const doubleDown = (socket, io) => {
   checkGameOver(socket, io, room.name);
 };
 
-const deleteAll = (_socket, io) => {
+const deleteAll = (socket, io) => {
   Object.values(Rooms).forEach((room) => {
     const { Players } = room;
     Object.values(Players).forEach((player) => {
@@ -487,6 +487,10 @@ const deleteAll = (_socket, io) => {
     });
     room.Players = {};
     deleteRoom(room.name);
+    Object.values(Players).forEach((player)=>{
+      resetPlayer(player.id)
+    })
+    socket.emit("players-received", Players);
   });
 };
 
