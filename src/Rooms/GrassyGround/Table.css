@@ -1,9 +1,9 @@
 .table-container {
   overflow-y: auto;
-  width: 75vw;
-  margin-right: 25vw;
+  width: 70vw;
   @media (max-width: 950px) {
     margin-right: 0vw;
-    width: 100vw;
+    width: 100%;
+    height: 65vh;
   }
 }

@@ -6,15 +6,11 @@
   color: --ash-black;
   width: 100%;
   background-color: var(--ash-black);
-  max-height: 40vh;
-
-  position: fixed;
-  bottom: 0;
+  height: 35vh;
   width: 100%;
   border-radius: 12px 12px 0px 0px;
   @media (min-width: 950px) {
-    position: fixed;
-    width: 25vw;
+    width: 30vw;
     height: 100vh;
     max-height: 100vh;
     border-radius: 12px 0px 0px 12px;
@@ -28,8 +24,8 @@
   align-items: flex-start;
   flex-direction: column;
   width: 80%;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   color: var(--white);
   max-height: 90%;
   height: 70%;
@@ -67,7 +63,7 @@
   background: var(--blue);
   outline: none;
   box-shadow: none;
-  height: 15%;
+  height: 25vh;
   width: 75%;
   padding: 20px;
   border-radius: 12px;
@@ -75,16 +71,13 @@
   resize: none; /* Prevent resizing */
   font-size: 20px; /* Increase font size */
   font-weight: bold; /* Increase font weight */
-  margin: 5%;
+  margin-right: 10px;
   overflow-y: hidden;
   &:focus {
     outline: none;
   }
 }
 .send-button {
-  position: absolute;
-  bottom: 3%;
-  right: 10%;
   color: white;
   font-size: 20px;
   cursor: pointer;
@@ -108,6 +101,18 @@
   border-radius: 12px;
 }
 
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  width: 80%;
+  @media (max-width: 950px) {
+    width: 80vw;
+  }
+}
+
 @media (max-width: 950px) {
   .message {
     margin: 10px 0px;
@@ -115,10 +120,7 @@
   }
   .chat-input {
     font-size: 20px;
-    margin: 10px;
-  }
-  .send-button {
-    right: 10%;
-    bottom: 6%;
+    height: 40px;
+    padding: 10px;
   }
 }

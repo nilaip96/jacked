@@ -52,17 +52,19 @@ const Chat = () => {
         ))}
         <div ref={messagesEndRef}></div>
       </div>
-      <textarea
-        className="chat-input"
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        maxLength="300"
-        onKeyPress={handleKeyPress}
-      />
-      <button className="send-button" onClick={sendMessage}>
-        &#9650;
-      </button>
+      <div className="input-container">
+        <textarea
+          className="chat-input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          maxLength="300"
+          onKeyPress={handleKeyPress}
+        />
+        <button className="send-button" onClick={sendMessage}>
+          &#9650;
+        </button>
+      </div>
     </div>
   );
 };

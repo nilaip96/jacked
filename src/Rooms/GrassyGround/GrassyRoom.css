@@ -7,7 +7,7 @@
 
 .grassy-room-content {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   @media (max-width: 950px) {
     flex-direction: column;
   }
