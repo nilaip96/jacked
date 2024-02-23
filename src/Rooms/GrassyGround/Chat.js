@@ -43,12 +43,10 @@ const Chat = () => {
       <Interface />
       <div className="chat-messages">
         {messages.map(({ text, source, time, playerName }, i) => (
-          <>
+          <React.Fragment key={`${i}-message`}>
             <div>{`${time} || ${playerName || source}`}</div>
-            <div key={i} className={"message"}>
-              {text}
-            </div>
-          </>
+            <div className={"message"}>{text}</div>
+          </React.Fragment>
         ))}
         <div ref={messagesEndRef}></div>
       </div>

@@ -13,9 +13,13 @@ const BetPlacer = ({ wallet }) => {
   if (wallet === 0) return null;
   return (
     <div className="Interface">
-      {bets.map((amount) => {
+      {bets.map((amount, i) => {
         if (amount > wallet) return null;
-        return <button onClick={() => placeBet(amount)}>{amount}</button>;
+        return (
+          <button key={`${i}-betPlacer`} onClick={() => placeBet(amount)}>
+            {amount}
+          </button>
+        );
       })}
     </div>
   );

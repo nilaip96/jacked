@@ -31,7 +31,7 @@ const Plays = ({ player }) => {
     <div className="Interface">
       <button onClick={handleStay}>STAY</button>
       {hands.map((hand, handIndex) => (
-        <>
+        <React.Fragment key={`${handIndex}-HandPlay`}>
           {!isBust(hand) && bestScore(hand) !== 21 && (
             <button
               key={`hit-${handIndex}`}
@@ -45,7 +45,7 @@ const Plays = ({ player }) => {
             WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0] && (
               <button onClick={(e) => handleSplit(e, handIndex)}>SPLIT</button>
             )}
-        </>
+        </React.Fragment>
       ))}
       {wallet >= bets[0] && hands.length === 1 && hands[0].length === 2 && (
         <button onClick={handleDoubleDown}>DD</button>
