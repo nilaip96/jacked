@@ -1,12 +1,11 @@
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
   grid-gap: 10px;
   overflow-y: auto;
   max-height: 80vh;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   @media (max-width: 950px) {
-    max-height: 40vh;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-height: 35vh;
   }
 }
 

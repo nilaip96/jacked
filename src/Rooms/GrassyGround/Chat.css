@@ -4,16 +4,14 @@
   justify-content: flex-end;
   align-items: center;
   color: --ash-black;
-  width: 100%;
   background-color: var(--ash-black);
-  height: 35vh;
-  width: 100%;
-  border-radius: 12px 12px 0px 0px;
-  @media (min-width: 950px) {
-    width: 30vw;
-    height: 100vh;
-    max-height: 100vh;
-    border-radius: 12px 0px 0px 12px;
+  border-radius: 12px 0px 0px 12px;
+  height: 100vh;
+  width: 30vw;
+  @media (max-width: 950px) {
+    width: 100%;
+    height: 45vh;
+    border-radius: 12px 12px 0px 0px;
   }
 }
 
@@ -27,11 +25,9 @@
   padding-top: 20px;
   padding-bottom: 20px;
   color: var(--white);
-  max-height: 90%;
-  height: 70%;
   margin: 5%;
+  height: 100%;
   @media (max-width: 950px) {
-    max-height: 8vh;
     margin: 4px;
     margin-top: 8px;
     padding-top: 10px;
@@ -63,13 +59,13 @@
   background: var(--blue);
   outline: none;
   box-shadow: none;
-  height: 25vh;
-  width: 75%;
-  padding: 20px;
+  width: 100%;
+  font-size: 20px;
+  height: 20px;
+  padding: 10px;
   border-radius: 12px;
   line-height: 1; /* Set line height to 1 to start cursor at the top */
   resize: none; /* Prevent resizing */
-  font-size: 20px; /* Increase font size */
   font-weight: bold; /* Increase font weight */
   margin-right: 10px;
   overflow-y: hidden;
@@ -116,11 +112,6 @@
 @media (max-width: 950px) {
   .message {
     margin: 10px 0px;
-    padding: 10px;
-  }
-  .chat-input {
-    font-size: 20px;
-    height: 40px;
     padding: 10px;
   }
 }

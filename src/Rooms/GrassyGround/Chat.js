@@ -51,7 +51,7 @@ const Chat = () => {
         <div ref={messagesEndRef}></div>
       </div>
       <div className="input-container">
-        <textarea
+        <input
           className="chat-input"
           type="text"
           value={inputValue}
