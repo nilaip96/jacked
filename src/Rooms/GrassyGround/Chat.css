@@ -1,7 +1,7 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   color: --ash-black;
   width: 100%;
