@@ -28,7 +28,7 @@ const Plays = ({ player }) => {
   };
 
   return (
-    <div>
+    <>
       <button onClick={handleStay}>STAY</button>
       {hands.map((hand, handIndex) => (
         <div key={`actions-${handIndex}`}>
@@ -49,7 +49,7 @@ const Plays = ({ player }) => {
       {hands.length === 1 && hands[0].length === 2 && (
         <button onClick={handleDoubleDown}>DD</button>
       )}
-    </div>
+    </>
   );
 };
 

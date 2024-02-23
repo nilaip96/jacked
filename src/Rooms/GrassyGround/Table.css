@@ -2,7 +2,7 @@
   overflow-y: auto;
   width: 75vw;
   margin-right: 25vw;
-  @media (max-width: 900px) {
+  @media (max-width: 950px) {
     margin-right: 0vw;
     width: 100vw;
   }

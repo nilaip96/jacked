@@ -1,5 +1,16 @@
 .Interface {
-
-
-  
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(40px, 1fr));
+  grid-gap: 10px;
+  border-radius: 20px;
+  background-color: var(--yellow);
+  padding: 10px;
+  /* Media query for narrow windows */
+  @media (max-width: 950px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 }
