@@ -2,10 +2,28 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(225px, 1fr));
   grid-gap: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 80vh;
   @media (max-width: 950px) {
     max-height: 40vh;
     grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
   }
+}
+
+.grid-container::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.grid-container::-webkit-scrollbar-track {
+  background: transparent; /* Color of the track */
+}
+
+.grid-container::-webkit-scrollbar-thumb {
+  background: var(--grey);  /* Color of the scrollbar thumb */
+  border-radius: 25px;
+  border: none; /* Radius of the scrollbar thumb */
+}
+
+.grid-container::-webkit-scrollbar-thumb:hover {
+  background: transparent; /* Color of the scrollbar thumb on hover */
 }

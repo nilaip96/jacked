@@ -32,6 +32,7 @@ body {
   --red: #fe0222;
   --orange: #fd7702;
   --yellow: #ffbb00;
+  --grey: #888;
   --background-login: linear-gradient(to bottom, var(--dusk), var(--orange));
   --grassy-room: var(--green);
   --accent: var(--white);

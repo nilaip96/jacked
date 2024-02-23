@@ -52,7 +52,7 @@
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scrollbar thumb */
+  background: var(--grey); /* Color of the scrollbar thumb */
   border-radius: 25px;
   border: none; /* Radius of the scrollbar thumb */
 }
