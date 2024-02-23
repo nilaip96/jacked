@@ -6,7 +6,7 @@
   /* Media query for narrow windows */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 160px;
   flex-wrap: wrap;
