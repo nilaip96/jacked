@@ -1,7 +1,6 @@
 import React from "react";
 import "./Player.css";
 import Card from "./Card.js";
-import Interface from "./Interface.js";
 import { bestScore } from "../../utils.js";
 
 const You = ({ player }) => {
