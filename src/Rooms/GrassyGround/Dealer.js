@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSocket } from "../../SocketContext.js";
-
 import Card from "./Card.js";
 import Deck from "./Deck.js";
 import { bestScore } from "../../utils.js";
+import "./Dealer.css";
+import saki from "../../assets/images/saki_happy.png";
+import reina from "../../assets/images/reina_laugh.png";
 import "./Dealer.css";
 const Dealer = () => {
   const socket = useSocket();
@@ -30,22 +32,20 @@ const Dealer = () => {
 
   const { hand, deck, tossed, hidden, wallet } = dealer;
   return (
-    <div className="Dealer">
-      <div>Dealer</div>
-      <div>{wallet}</div>
-      <div>
-        {hand.map((card, i) =>
-          hidden && i === 0 ? (
-            <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />
-          ) : (
-            <Card card={card} key={i} />
-          )
-        )}
+    <div className="dealer-container">
+      <div className="Dealer">
+        <img className="Saki" src={saki} alt="Dealer Saki" />
+        <div>
+          {hand.map((card, i) =>
+            hidden && i === 0 ? (
+              <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />
+            ) : (
+              <Card card={card} key={i} />
+            )
+          )}
+        </div>
+        <img className="Reina" src={reina} alt={"Dealer Saki"} />
       </div>
-      <div>{bestScore(hand)}</div>
-      <div>{`Tossed Count: ${tossed.length}`}</div>
-      <div>{`Deck Count: ${deck.length}`}</div>
-      <Deck deck={deck} />
     </div>
   );
 };

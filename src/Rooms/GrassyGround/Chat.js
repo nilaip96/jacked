@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSocket } from "../../SocketContext.js";
 import "./Chat.css";
 import Interface from "./Interface.js";
+
 const Chat = () => {
   const socket = useSocket();
   const [messages, setMessages] = useState([]);

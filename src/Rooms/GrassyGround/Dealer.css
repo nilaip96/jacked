@@ -1,6 +1,20 @@
+.dealer-container {
+  display: flex;
+  flex-direction: row;
+  height: 20vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
 .Dealer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  height: 20vh;
+  justify-content: space-between;
+  background: url("../../assets/images/background-reflection.webp") center/cover
+    no-repeat; /* Set the background GIF */
+  padding: 10px; /* Adjust padding as needed */
+  border-radius: 16px;
+  height: 80%;
+  width: 90%;
 }
