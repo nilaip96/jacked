@@ -1,4 +1,31 @@
 .grid-item {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.player {
   text-align: center;
   font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--green);
+  border-radius: 12px;
+  height: 80%;
+  width: 90%;
+  max-width: 300px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.Hands {
+  display: flex;
+  flex-direction: column;
 }

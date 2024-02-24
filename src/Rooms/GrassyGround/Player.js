@@ -14,20 +14,26 @@ const Player = ({ player }) => {
 
   return (
     <div className="grid-item">
-      <div>{name}</div>
-      <div>{wallet}</div>
-      <div>{status}</div>
-      <div>{suggestion}</div>
-      <div>{bets.reduce((sum, bet) => sum + bet, 0)}</div>
-      {hands.map((hand, handIndex) => (
-        <div key={`hand-${handIndex}`}>
-          {hand.map((card, i) => (
-            <Card card={card} key={`card-${handIndex + i}`} />
+      <div className="player">
+        <div className="stats">
+          <div>{name}</div>
+          <div>{wallet}</div>
+          <div>{status}</div>
+          <div>{suggestion}</div>
+          <div>{bets.reduce((sum, bet) => sum + bet, 0)}</div>
+          {status === "bust" && <div>BUST</div>}
+          {status === "stay" && <div>Stopped</div>}
+        </div>
+        <div className="Hands">
+          {hands.map((hand, handIndex) => (
+            <div className="hand" key={`hand-${handIndex}`}>
+              {hand.map((card, i) => (
+                <Card card={card} key={`card-${handIndex + i}`} />
+              ))}
+            </div>
           ))}
         </div>
-      ))}
-      {status === "bust" && <div>BUST</div>}
-      {status === "stay" && <div>Stopped</div>}
+      </div>
     </div>
   );
 };

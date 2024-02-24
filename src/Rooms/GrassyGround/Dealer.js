@@ -35,7 +35,7 @@ const Dealer = () => {
     <div className="dealer-container">
       <div className="Dealer">
         <img className="Saki" src={saki} alt="Dealer Saki" />
-        <div>
+        <div className="hand">
           {hand.map((card, i) =>
             hidden && i === 0 ? (
               <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />
