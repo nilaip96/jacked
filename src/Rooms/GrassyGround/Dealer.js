@@ -4,12 +4,11 @@ import Card from "./Card.js";
 import Deck from "./Deck.js";
 import { bestScore } from "../../utils.js";
 import "./Dealer.css";
-import saki from "../../assets/images/saki_happy.png";
-import reina from "../../assets/images/reina_laugh.png";
-import "./Dealer.css";
+import Dancers from "./Dancers.js";
+import background from "../../assets/images/background.gif";
+
 const Dealer = () => {
   const socket = useSocket();
-
   const [dealer, setDealer] = useState({
     deck: [],
     hand: [],
@@ -32,9 +31,12 @@ const Dealer = () => {
 
   const { hand, deck, tossed, hidden, wallet } = dealer;
   return (
-    <div className="dealer-container">
+    <div
+      className="dealer-container"
+      style={{ background: `url("${background}") center/cover no-repeat` }}
+    >
+      <Dancers dealer={dealer} />
       <div className="Dealer">
-        <img className="Saki" src={saki} alt="Dealer Saki" />
         <div className="hand">
           {hand.map((card, i) =>
             hidden && i === 0 ? (
@@ -44,7 +46,6 @@ const Dealer = () => {
             )
           )}
         </div>
-        <img className="Reina" src={reina} alt={"Dealer Saki"} />
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ const You = ({ player }) => {
   return (
     <div className="grid-item">
       <div className="player">
-        <div className="stats">
+        <div className="slot stats">
           <div>you</div>
           <div>{name}</div>
           <div>{wallet}</div>
@@ -26,16 +26,14 @@ const You = ({ player }) => {
           {status === "bust" && <div>BUST</div>}
           {status === "stay" && <div>Stopped</div>}
         </div>
-        <div className="Hands">
-          {hands.map((hand, handIndex) => (
-            <div className="hand" key={`hand-${handIndex}`}>
-              {hand.map((card, i) => (
-                <Card card={card} key={`card-${handIndex + i}`} />
-              ))}
-              <div>{bestScore(hand)}</div>
-            </div>
-          ))}
-        </div>
+        {hands.map((hand, handIndex) => (
+          <div className="slot hand" key={`hand-${handIndex}`}>
+            {hand.map((card, i) => (
+              <Card card={card} key={`card-${handIndex + i}`} />
+            ))}
+            <div>{bestScore(hand)}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

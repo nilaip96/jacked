@@ -4,7 +4,7 @@ import { isBust, bestScore } from "../../utils.js";
 import { WEIGHT } from "../../Constants.js";
 
 const Plays = ({ player }) => {
-  const { hands, wallet, bets } = player;
+  const { hands, wallet, bets, suggestion } = player;
 
   const socket = useSocket();
 
@@ -29,7 +29,9 @@ const Plays = ({ player }) => {
 
   return (
     <div className="Interface">
-      <button onClick={handleStay}>STAY</button>
+      <button className={"suggested"} onClick={handleStay}>
+        STAY
+      </button>
       {hands.map((hand, handIndex) => (
         <React.Fragment key={`${handIndex}-HandPlay`}>
           {!isBust(hand) && bestScore(hand) !== 21 && (
@@ -37,7 +39,7 @@ const Plays = ({ player }) => {
               key={`hit-${handIndex}`}
               onClick={(e) => handleHit(e, handIndex)}
             >
-              {`HIT ${handIndex + 1}`}
+              {`HIT ${hands.length > 1 ? handIndex + 1 : ""}`}
             </button>
           )}
           {wallet >= bets[0] &&

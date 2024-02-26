@@ -45,7 +45,7 @@ const Chat = () => {
       <div className="chat-messages">
         {messages.map(({ text, source, time, playerName }, i) => (
           <React.Fragment key={`${i}-message`}>
-            <div>{`${time} || ${playerName || source}`}</div>
+            <div>{`${playerName || source}: ${time}`}</div>
             <div className={"message"}>{text}</div>
           </React.Fragment>
         ))}

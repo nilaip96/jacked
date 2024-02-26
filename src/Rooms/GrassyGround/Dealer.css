@@ -1,21 +1,21 @@
 .dealer-container {
   display: flex;
-  flex-direction: row;
-  height: 20vh;
+  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
 .Dealer {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background: url("../../assets/images/background-reflection.webp") center/cover
-    no-repeat; /* Set the background GIF */
+  flex-direction: column;
+  justify-content: center;
   padding: 10px; /* Adjust padding as needed */
   border-radius: 16px;
-  height: 80%;
-  width: 90%;
+  min-width: 236px;
+  width: 80%;
+  max-width: 600px;
+  height: 60px;
 }
 
 .hand {
@@ -23,4 +23,18 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.Dancer {
+  height: 200px;
+  width: 200px;
+  @media (max-width: 950px) {
+    height: 90px;
+    width: 90px;
+  }
+}
+
+.Dancers {
+  display: flex;
+  flex-direction: row;
 }
