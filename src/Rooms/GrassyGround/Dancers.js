@@ -5,9 +5,7 @@ import { useSocket } from "../../SocketContext.js";
 const Dancers = ({ dealer }) => {
   const [loaded, setLoaded] = useState(false);
   const { hand, deck, tossed, hidden, wallet } = dealer;
-  console.log(hidden);
-  const current = () =>
-    hidden ? (hand.length === 0 ? "walk" : "dance") : "swing";
+  const current = hidden ? (hand.length === 0 ? "walk" : "dance") : "swing";
 
   useEffect(() => {
     const loadImage = (image) => {
@@ -31,9 +29,9 @@ const Dancers = ({ dealer }) => {
   return (
     loaded && (
       <div className="Dancers">
-        <img className="Dancer red" src={red[current()]} />
-        <img className="Dancer blonde" src={blonde[current()]} />
-        <img className="Dancer blue" src={blue[current()]} />
+        <img className="Dancer red" src={red[current]} />
+        <img className="Dancer blonde" src={blonde[current]} />
+        <img className="Dancer blue" src={blue[current]} />
       </div>
     )
   );
