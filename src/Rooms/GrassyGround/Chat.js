@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSocket } from "../../SocketContext.js";
-import "./Chat.css";
 import Interface from "./Interface.js";
+import "./Chat.css";
 
 const Chat = () => {
   const socket = useSocket();
@@ -46,8 +46,16 @@ const Chat = () => {
       <div className="chat-messages">
         {messages.map(({ text, source, time, playerName }, i) => (
           <React.Fragment key={`${i}-message`}>
-            <div>{`${playerName || source}: ${time}`}</div>
-            <div className={"message"}>{text}</div>
+            <div className={source === socket.id ? "your-tag" : ""}>{`${
+              playerName || source
+            }: ${time}`}</div>
+            <div
+              className={`message ${
+                source === socket.id ? "your-message" : ""
+              }`}
+            >
+              {text}
+            </div>
           </React.Fragment>
         ))}
         <div ref={messagesEndRef}></div>

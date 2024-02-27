@@ -97,6 +97,15 @@
   border-radius: 12px;
 }
 
+.your-message {
+  align-self: flex-end;
+  background-color: var(--blue);
+}
+
+.your-tag {
+  align-self: flex-end;
+}
+
 .input-container {
   display: flex;
   flex-direction: row;

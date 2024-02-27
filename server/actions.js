@@ -1,5 +1,5 @@
 const { findRoom, deleteRoom, Rooms } = require("./models/rooms.js");
-const { findPlayer, resetPlayer, Players } = require("./models/players.js");
+const { findPlayer, resetPlayer } = require("./models/players.js");
 const { createMessage } = require("./models/messages.js");
 const { resetDealer } = require("./models/dealers.js");
 const { log } = console;
