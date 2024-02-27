@@ -60,3 +60,30 @@ button:hover {
   background-color: var(--orange);
   border-color: var(--orange);
 }
+
+@keyframes changeColor {
+  0% {
+    color: red;
+    background-color: green;
+  }
+  20% {
+    color: yellow;
+    background-color: blue;
+  }
+  40% {
+    color: green;
+    background-color: purple;
+  }
+  65% {
+    color: blue;
+    background-color: red;
+  }
+  90% {
+    color: purple;
+    background-color: yellow;
+  }
+  100% {
+    color: red;
+    background-color: green;
+  }
+}

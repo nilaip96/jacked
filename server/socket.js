@@ -10,6 +10,7 @@ const {
   split,
   syncRoom,
   deleteAll,
+  broke,
 } = require("./actions.js");
 const { log } = console;
 
@@ -67,6 +68,10 @@ module.exports.socket = (server) => {
 
     socket.on("delete-all", () => {
       deleteAll(socket, io);
+    });
+
+    socket.on("broke", () => {
+      broke(socket, io);
     });
   });
 };

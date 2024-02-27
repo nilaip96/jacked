@@ -25,6 +25,14 @@
   border-radius: 12px;
 }
 
+.bust {
+  animation: none;
+  background: none;
+}
+.All {
+  animation: changeColor 1s infinite;
+}
+
 @keyframes changeBackground {
   0% {
     background-color: red;

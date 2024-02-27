@@ -127,6 +127,15 @@ const suggest = (hand, upCard) => {
   return CHEAT_SHEET[total][upCardIndex];
 };
 
+const randomMessage = (name) =>
+  [
+    `Here you go lil cutie baby, ${name}`,
+    `${name} is a broke ass hoe`,
+    `${name} is tryna lose`,
+    `here is another $1000 ${name}`,
+    `dont give up ${name} daddy`,
+  ][Math.floor(Math.random() * 5)];
+
 module.exports = {
   compareHands,
   isBust,
@@ -139,4 +148,5 @@ module.exports = {
   analyzeOutComes,
   delay,
   suggest,
+  randomMessage,
 };

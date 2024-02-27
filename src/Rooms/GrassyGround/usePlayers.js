@@ -35,6 +35,9 @@ const usePlayers = () => {
 
     return () => {
       socket.off("player-received", playerEvent);
+      socket.off("players-received", playersEvent);
+      socket.off("player-left", playerLeft);
+      socket.off("game-status", gameStatusEvent);
     };
   }, [players, socket]);
 

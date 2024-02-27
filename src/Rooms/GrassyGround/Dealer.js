@@ -29,7 +29,7 @@ const Dealer = () => {
     };
   }, [dealer, socket]);
 
-  const { hand, deck, tossed, hidden, wallet } = dealer;
+  const { hand, hidden } = dealer;
   return (
     <div
       className="dealer-container"
@@ -38,7 +38,12 @@ const Dealer = () => {
       <Dancers dealer={dealer} />
       <div className="Dealer">
         {hand.length > 0 && (
-          <div className="hand">
+          <div
+            className={`hand ${bestScore(hand) > 21 ? "bust" : ""}`}
+            style={{
+              animationDuration: `1s`,
+            }}
+          >
             {hand.map((card, i) =>
               hidden && i === 0 ? (
                 <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />

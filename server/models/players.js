@@ -30,7 +30,6 @@ const resetPlayer = (id) => {
   player.status = PLAYER_STATUS.spectator;
   player.hands = [[]];
   player.bets = [];
-  player.position = { x: 10, y: 10 };
   player.suggestion = "";
   return player;
 };

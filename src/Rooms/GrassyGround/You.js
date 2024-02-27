@@ -17,7 +17,27 @@ const You = ({ player }) => {
       {hands.map((hand, handIndex) =>
         (bets.length === 0 || bets[handIndex] === 0) &&
         hand.length === 0 ? null : (
-          <div className="slot hand" key={`hand-${handIndex}`}>
+          <div
+            className={`slot hand ${
+              bestScore(hand) > 21 ||
+              status === "push" ||
+              status === "lost" ||
+              status === "bust"
+                ? "bust"
+                : ""
+            }`}
+            style={{
+              animationDuration:
+                status === "won"
+                  ? "0.5s"
+                  : `${
+                      hand.length === 0
+                        ? 1
+                        : 8 - Math.floor(bestScore(hand) / 3)
+                    }s`,
+            }}
+            key={`hand-${handIndex}`}
+          >
             <div>{bets[handIndex]}</div>
             {hand.map((card, i) => (
               <Card card={card} key={`card-${handIndex + i}`} />

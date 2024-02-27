@@ -20,6 +20,7 @@ const Chat = () => {
     socket.on("messages-received", messagesEvent);
     return () => {
       socket.off("message-received", messageEvent);
+      socket.off("messages-received", messagesEvent);
     };
   }, [socket]);
 

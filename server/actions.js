@@ -17,6 +17,7 @@ const {
   determineWinner,
   delay,
   suggest,
+  randomMessage,
 } = require("./utils.js");
 
 const joinRoom = (socket, _io, roomName, playerName) => {
@@ -484,12 +485,26 @@ const deleteAll = (_socket, io) => {
       const socket = io.sockets.sockets.get(player.id);
       leaveRoom(socket, io);
       resetPlayer(player.id);
+      player.room = "";
       io.to(player.id).emit("room-received", "");
       io.to(player.id).emit("players-received", { [player.id]: player });
     });
     room.Players = {};
     deleteRoom(room.name);
   });
+};
+
+const broke = (socket, io) => {
+  const player = findPlayer(socket.id);
+  const room = findRoom(player.room);
+  if (!room.inGame) {
+    player.wallet += 1000;
+    io.in(room.name).emit("player-received", player);
+  }
+
+  const newMessage = createMessage(randomMessage(player.name), "Dealer");
+  room.Messages.push(newMessage);
+  io.in(room.name).emit("message-received", newMessage);
 };
 
 module.exports = {
@@ -503,4 +518,5 @@ module.exports = {
   doubleDown,
   syncRoom,
   deleteAll,
+  broke,
 };

@@ -21,5 +21,11 @@
 }
 
 .suggested {
-  background-color: var(--green);
+  animation: changeColor 1s infinite;
+}
+
+.broke {
+  width: 80px;
+  height: 80px;
+  animation: changeColor 1s infinite;
 }
