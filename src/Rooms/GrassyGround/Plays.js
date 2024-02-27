@@ -29,13 +29,17 @@ const Plays = ({ player }) => {
 
   return (
     <div className="Interface">
-      <button className={"suggested"} onClick={handleStay}>
+      <button
+        className={suggestion === "S" ? "suggested" : ""}
+        onClick={handleStay}
+      >
         STAY
       </button>
       {hands.map((hand, handIndex) => (
         <React.Fragment key={`${handIndex}-HandPlay`}>
           {!isBust(hand) && bestScore(hand) !== 21 && (
             <button
+              className={suggestion === "H" ? "suggested" : ""}
               key={`hit-${handIndex}`}
               onClick={(e) => handleHit(e, handIndex)}
             >
@@ -45,12 +49,22 @@ const Plays = ({ player }) => {
           {wallet >= bets[0] &&
             hand.length === 2 &&
             WEIGHT[hand[0].value][0] === WEIGHT[hand[1].value][0] && (
-              <button onClick={(e) => handleSplit(e, handIndex)}>SPLIT</button>
+              <button
+                className={suggestion === "SP" ? "suggested" : ""}
+                onClick={(e) => handleSplit(e, handIndex)}
+              >
+                SPLIT
+              </button>
             )}
         </React.Fragment>
       ))}
       {wallet >= bets[0] && hands.length === 1 && hands[0].length === 2 && (
-        <button onClick={handleDoubleDown}>DD</button>
+        <button
+          className={suggestion === "DD" ? "suggested" : ""}
+          onClick={handleDoubleDown}
+        >
+          DD
+        </button>
       )}
     </div>
   );

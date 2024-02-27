@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { red, blue, blonde } from "../../assets/images/dancers.js";
-import { useSocket } from "../../SocketContext.js";
 
 const Dancers = ({ dealer }) => {
   const [loaded, setLoaded] = useState(false);
@@ -29,9 +28,13 @@ const Dancers = ({ dealer }) => {
   return (
     loaded && (
       <div className="Dancers">
-        <img className="Dancer red" src={red[current]} />
-        <img className="Dancer blonde" src={blonde[current]} />
-        <img className="Dancer blue" src={blue[current]} />
+        <img className="Dancer red" alt="red dancer" src={red[current]} />
+        <img
+          className="Dancer blonde"
+          alt="blonde dancer"
+          src={blonde[current]}
+        />
+        <img className="Dancer blue" alt="blue dancer" src={blue[current]} />
       </div>
     )
   );

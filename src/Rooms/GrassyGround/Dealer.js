@@ -37,15 +37,17 @@ const Dealer = () => {
     >
       <Dancers dealer={dealer} />
       <div className="Dealer">
-        <div className="hand">
-          {hand.map((card, i) =>
-            hidden && i === 0 ? (
-              <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />
-            ) : (
-              <Card card={card} key={i} />
-            )
-          )}
-        </div>
+        {hand.length > 0 && (
+          <div className="hand">
+            {hand.map((card, i) =>
+              hidden && i === 0 ? (
+                <Deck deck={["HIDDEN_CARD"]} key={"HIDDEN" + i} />
+              ) : (
+                <Card card={card} key={i} />
+              )
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

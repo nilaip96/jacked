@@ -12,22 +12,27 @@
   justify-content: center;
   padding: 10px; /* Adjust padding as needed */
   border-radius: 16px;
-  min-width: 236px;
-  width: 80%;
-  max-width: 600px;
   height: 60px;
+  width: 500px;
+  @media (max-width: 950px) {
+    width: 256px;
+  }
 }
 
 .hand {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  padding: 4px 0px;
+  @media (max-width: 950px) {
+    width: 256px;
+  }
 }
 
 .Dancer {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   @media (max-width: 950px) {
     height: 90px;
     width: 90px;

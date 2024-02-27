@@ -1,35 +1,78 @@
 .grid-item {
-  height: 20vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
+  flex-direction: column;
 }
 
-.player {
-  text-align: center;
-  font-size: 12px;
+.slot {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--blue);
+  width: 256px;
   border-radius: 12px;
-  width: 236px;
-  height: 100px;
-  padding: 10px;
-  @media (min-width: 1200px) {
-    width: 100%;
-    max-width: 300px;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  background: none;
+}
+.stats {
+  height: 40px;
+}
+
+.hand {
+  animation: changeBackground 1s infinite;
+  border-radius: 12px;
+}
+
+@keyframes changeBackground {
+  0% {
+    background-color: red;
+  }
+  20% {
+    background-color: yellow;
+  }
+  40% {
+    background-color: green;
+  }
+  65% {
+    background-color: blue;
+  }
+  90% {
+    background-color: purple;
+  }
+  100% {
+    background-color: red;
   }
 }
 
-.stats {
-  display: flex;
-  flex-direction: column;
+.Chicken {
+  height: 30px;
+  width: 30px;
 }
 
-.Hands {
-  display: flex;
-  flex-direction: column;
+.you {
+  border: 2px solid var(--white);
+  animation: changeBorder 1s infinite;
+}
+
+@keyframes changeBorder {
+  0% {
+    border-color: red;
+  }
+  20% {
+    border-color: yellow;
+  }
+  40% {
+    border-color: green;
+  }
+  65% {
+    border-color: blue;
+  }
+  90% {
+    border-color: purple;
+  }
+  100% {
+    border-color: red;
+  }
 }
