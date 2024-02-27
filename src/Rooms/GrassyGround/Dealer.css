@@ -40,6 +40,17 @@
     height: 90px;
     width: 90px;
   }
+  @media (max-height: 700px) {
+    height: 60px;
+    width: 60px;
+  }
+  @media (max-height: 600px) {
+    height: 40px;
+    width: 40px;
+  }
+  @media (max-height: 500px) {
+    display: none;
+  }
 }
 
 .Dancers {
