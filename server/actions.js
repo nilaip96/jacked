@@ -215,7 +215,7 @@ const dealCards = (_socket, io, roomName) => {
 
   let i = dealingOrder.length - 1;
 
-  if (i > room.Dealer.deck.length) {
+  if ((i * 3) > room.Dealer.deck.length) {
     room.Dealer.deck = [...room.Dealer.deck, ...room.Dealer.tossed];
     room.Dealer.tossed = [];
     io.in(room.name).emit("dealer-received", room.Dealer);
