@@ -19,4 +19,4 @@ const createMessage = (text, source = "", playerName = "") => {
   return newMessage;
 };
 
-module.exports = { createMessage };
+module.exports = { createMessage, Messages };

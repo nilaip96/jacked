@@ -35,4 +35,4 @@ const resetDealer = (dealer) => {
   return dealer;
 };
 
-module.exports = { resetDealer, createDealer };
+module.exports = { resetDealer, createDealer, Dealers };

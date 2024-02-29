@@ -1,4 +1,8 @@
 const { Rooms } = require("./models/rooms.js");
+const { Players } = require("./models/players.js");
+const { Messages } = require("./models/messages.js");
+const { Dealers } = require("./models/dealers.js");
+
 const os = require("os");
 
 module.exports.admin = () => {
@@ -73,7 +77,12 @@ module.exports.admin = () => {
     <p>${external}</p>
     <h2>Rooms and Players</h2>
     ${RoomsHTML}
-    <button onclick="deleteAll()">Delete Rooms</button>
+    <button onclick="deleteAll()">Clear Model Memory</button>
+    <h2>model Counts</h2>
+    <p>  Messages: ${Messages.length}</p>
+    <p>  Rooms: ${Object.values(Rooms).length}</p>
+    <p>  Players: ${Object.values(Players).length}</p>
+    <p>  Dealers: ${Object.values(Dealers).length}</p>
   </body>
 </html>
 `;

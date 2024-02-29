@@ -36,6 +36,7 @@ const Dealer = () => {
       style={{ background: `url("${background}") center/cover no-repeat` }}
     >
       <Dancers dealer={dealer} />
+      <div style={{ height: "20px" }}>{!hidden && bestScore(hand)}</div>
       <div className="Dealer">
         {hand.length > 0 && (
           <div
