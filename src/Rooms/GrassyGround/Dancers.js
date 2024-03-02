@@ -3,7 +3,7 @@ import { red, blue, blonde } from "../../assets/images/dancers.js";
 
 const Dancers = ({ dealer }) => {
   const [loaded, setLoaded] = useState(false);
-  const { hand, deck, tossed, hidden, wallet } = dealer;
+  const { hand, hidden } = dealer;
   const current = hidden ? (hand.length === 0 ? "walk" : "dance") : "swing";
 
   useEffect(() => {
@@ -28,13 +28,25 @@ const Dancers = ({ dealer }) => {
   return (
     loaded && (
       <div className="Dancers">
-        <img className="Dancer red" alt="red dancer" src={red[current]} />
-        <img
-          className="Dancer blonde"
-          alt="blonde dancer"
-          src={blonde[current]}
-        />
-        <img className="Dancer blue" alt="blue dancer" src={blue[current]} />
+        {["walk", "dance", "swing"].map((move) => (
+          <>
+            <img
+              className={`Dancer red ${move !== current ? "hiding" : ""}`}
+              alt="red dancer"
+              src={red[move]}
+            />
+            <img
+              className={`Dancer blonde ${move !== current ? "hiding" : ""}`}
+              alt="blonde dancer"
+              src={blonde[move]}
+            />
+            <img
+              className={`Dancer blue ${move !== current ? "hiding" : ""}`}
+              alt="blue dancer"
+              src={blue[move]}
+            />
+          </>
+        ))}
       </div>
     )
   );

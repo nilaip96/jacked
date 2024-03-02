@@ -1,0 +1,24 @@
+.sound-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px; /* Adjust padding as needed */
+  z-index: 9999; /* Ensure the sound container stays above other elements */
+}
+.sound-container > button {
+  margin: 2px;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
+}
+.muted {
+  background-color: var(--red);
+  &:hover {
+    background-color: var(--red);
+    border-color: var(--red);
+  }
+  &:focus {
+    background-color: var(--red);
+    border-color: var(--red);
+  }
+}

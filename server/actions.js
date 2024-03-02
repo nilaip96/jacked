@@ -43,7 +43,7 @@ const joinRoom = (socket, _io, roomName, playerName) => {
   socket.emit("room-received", roomName);
   socket.to(roomName).emit("message-received", newMessage);
   socket.to(roomName).emit("player-received", player);
-
+  socket.to(roomName).emit("sound", "join");
   log(`User ${socket.id}, ${message}`);
 };
 
@@ -100,6 +100,8 @@ const leaveRoom = (socket, io) => {
     io.in(name).emit("message-received", resetMessage);
     io.in(name).emit("dealer-received", room.Dealer);
     io.in(name).emit("game-status", room.inGame);
+    io.in(name).emit("sound", "leave");
+
     return;
   }
   if (inGame) {
@@ -115,6 +117,7 @@ const sendMessage = (socket, io, message) => {
 
   Messages.push(newMessage);
   io.in(name).emit("message-received", newMessage);
+  io.in(name).emit("sound", "message");
 
   if (message === "deez") {
     const nuts = createMessage("nuts!!! Gotteeem!!!", "Dealer");
@@ -157,6 +160,7 @@ const enablePlayers = (_socket, io, roomName) => {
       player.wallet += (3 / 2) * bet + bet;
       room.Dealer.wallet -= (3 / 2) * bet;
       player.bets[0] = 0;
+      io.in(room.name).emit("sound", "won");
     } else {
       player.status = PLAYER_STATUS.playing;
       player.suggestion = suggest(hand, room.Dealer.hand[0].value);
@@ -178,6 +182,7 @@ const dealerBlackJack = (_socket, io, roomName) => {
 
   room.Dealer.hidden = false;
   io.in(room.name).emit("dealer-received", room.Dealer);
+  io.in(room.name).emit("sound", "lost");
 
   const readyPlayers = Object.values(room.Players).filter(
     ({ status }) => status === PLAYER_STATUS.ready
@@ -306,6 +311,7 @@ const placeBet = (socket, io, amount) => {
   );
   Messages.push(newMessage);
   io.in(room.name).emit("message-received", newMessage);
+  io.in(room.name).emit("sound", "bet");
 
   if (player.wallet === 0) {
     const newMessage = createMessage(
@@ -361,9 +367,16 @@ const determineWinners = (_socket, io, roomName) => {
 
       const winner = determineWinner(outComes);
 
-      if (winner === OUTCOMES.Player) player.status = PLAYER_STATUS.won;
-      else if (winner === OUTCOMES.Dealer) player.status = PLAYER_STATUS.lost;
-      else player.status = PLAYER_STATUS.push;
+      if (winner === OUTCOMES.Player) {
+        player.status = PLAYER_STATUS.won;
+        io.in(roomName).emit("sound", "won");
+      } else if (winner === OUTCOMES.Dealer) {
+        player.status = PLAYER_STATUS.lost;
+        io.in(roomName).emit("sound", "lost");
+      } else {
+        player.status = PLAYER_STATUS.push;
+        io.in(roomName).emit("sound", "push");
+      }
 
       io.in(name).emit("player-received", player);
 
@@ -440,12 +453,14 @@ const hit = (socket, io, handIndex) => {
   }
   player.suggestion = "";
 
+  io.in(room.name).emit("sound", "hit");
   io.in(room.name).emit("dealer-received", room.Dealer);
   io.in(room.name).emit("player-received", player);
 
   const newMessage = createMessage(message, socket.id, "Dealer");
   room.Messages.push(newMessage);
   io.in(room.name).emit("message-received", newMessage);
+  io.in(room.name).emit("sound", "hit");
 
   checkGameOver(socket, io, room.name);
 };
@@ -462,6 +477,7 @@ const stay = (socket, io) => {
   const newMessage = createMessage(`${player.name} stays`, socket.id, "Dealer");
   room.Messages.push(newMessage);
   io.in(room.name).emit("message-received", newMessage);
+  io.in(room.name).emit("sound", "hit");
 
   checkGameOver(socket, io, room.name);
 };
@@ -567,6 +583,7 @@ const broke = (socket, io) => {
   const newMessage = createMessage(randomMessage(player.name), "Dealer");
   room.Messages.push(newMessage);
   io.in(room.name).emit("message-received", newMessage);
+  io.in(room.name).emit("sound", "join");
 };
 
 module.exports = {

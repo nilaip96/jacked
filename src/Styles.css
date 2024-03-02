@@ -54,11 +54,14 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  &:focus {
+    background-color: var(--blue); /* Set background color */
+  }
 }
 
 button:hover {
-  background-color: var(--orange);
-  border-color: var(--orange);
+  background-color: var(--blue);
+  border-color: var(--blue);
 }
 
 @keyframes changeColor {
