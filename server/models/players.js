@@ -11,6 +11,7 @@ const Player = (id, name) => ({
   hands: [[]],
   bets: [],
   suggestion: "",
+  rebirths: 0
 });
 
 const createPlayer = (id, name) => {

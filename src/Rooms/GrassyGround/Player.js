@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Player.css";
 import Card from "./Card.js";
 import { bestScore } from "../../utils.js";
 import Chicken from "./Chicken.js";
 
 const Player = ({ player }) => {
-  const { name, status, wallet = 0, hands = [], bets = [] } = player;
+  const { name, status, wallet = 0, hands = [], bets = [], rebirths = 0 } = player;
 
   return (
     <div className="grid-item">
@@ -16,6 +16,7 @@ const Player = ({ player }) => {
       >
         <div>{wallet}</div>
         <div>{name}</div>
+        <div>{rebirths}</div>
         <Chicken status={status} />
       </div>
       {hands.map((hand, handIndex) =>

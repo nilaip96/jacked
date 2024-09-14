@@ -5,7 +5,12 @@ import { bestScore } from "../../utils.js";
 import Chicken from "./Chicken.js";
 
 const You = ({ player }) => {
-  const { name, wallet = 0, hands = [], bets = [], status } = player;
+  const [rebirths, setRebirths] = useState(0)
+  const { name, wallet = 0, hands = [], bets = [], status, rebirths } = player;
+
+  useEffect(()=>{
+    setRebirths(localStorage.getItem("rebirths") || 0)
+  },[])
 
   return (
     <div className="grid-item">
