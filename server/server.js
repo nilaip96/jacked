@@ -8,7 +8,7 @@ require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
 const publicPath = path.join(__dirname, "../build");
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static(publicPath));
 app.use(cors());

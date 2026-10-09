@@ -3,10 +3,10 @@ import socketIOClient from "socket.io-client";
 
 const SocketContext = createContext();
 
+// In production the Express server serves the client, so connect to the same
+// origin. In development the CRA dev server (3001) talks to the API on 3000.
 const endPoint =
-  process.env.NODE_ENV === "production"
-    ? "https://jacked-1.onrender.com"
-    : "localhost:3000";
+  process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
 
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);

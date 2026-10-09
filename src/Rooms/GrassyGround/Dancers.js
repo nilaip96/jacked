@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { red, blue, blonde } from "../../assets/images/dancers.js";
 
 const Dancers = ({ dealer }) => {
@@ -29,7 +29,7 @@ const Dancers = ({ dealer }) => {
     loaded && (
       <div className="Dancers">
         {["walk", "dance", "swing"].map((move) => (
-          <>
+          <Fragment key={move}>
             <img
               className={`Dancer red ${move !== current ? "hiding" : ""}`}
               alt="red dancer"
@@ -45,7 +45,7 @@ const Dancers = ({ dealer }) => {
               alt="blue dancer"
               src={blue[move]}
             />
-          </>
+          </Fragment>
         ))}
       </div>
     )

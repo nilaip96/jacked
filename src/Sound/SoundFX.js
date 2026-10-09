@@ -76,7 +76,7 @@ const SoundFX = () => {
         FX
       </button>
       {audio.map(([ref, src]) => (
-        <audio ref={ref} muted={isMuted} src={src} />
+        <audio key={src} ref={ref} muted={isMuted} src={src} />
       ))}
     </>
   );
